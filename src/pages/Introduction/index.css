@@ -34,6 +34,42 @@
   font-family: "LiGothic", "FangSong", Arial, serif;
 }
 
+.mobile_introduction {
+  padding-top: 20px;
+}
+
+.mobile_title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
+.mobile_content {
+  border-radius:10px;
+  padding: 5px;
+  width: 75%;
+  transform: translateX(15%);
+  background: #D0D0CF;
+  color: #000;
+  font-size: 15px;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
+.mobile_illustrate {
+  border-radius:10px;
+  margin-top: 20px;
+  transform: translateX(50%);
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  box-sizing: border-box;
+  width: 50%;
+  padding: 5px;
+  font-size: 20px;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
 /* in 為 true 時: */
 .mouseOver-enter {
   opacity: 1;

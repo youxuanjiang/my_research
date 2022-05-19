@@ -463,16 +463,30 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
       </div>
     </div>
   ];
+  const isMobile = window.innerWidth <= 500;
 
-  return (
-    <div className="survey">
-      {
-        questionList.map((question) => {
-          return(<span key={v4()}>{question}</span>)
-        })
-      }
-    </div>
-  );
+  if (isMobile) {
+    return (
+      <div className="mobile_survey">
+        {
+          questionList.map((question) => {
+            return(<span key={v4()}>{question}</span>)
+          })
+        }
+      </div>
+    );
+  }
+  else {
+    return (
+      <div className="survey">
+        {
+          questionList.map((question) => {
+            return(<span key={v4()}>{question}</span>)
+          })
+        }
+      </div>
+    );
+  }
 };
 
 export default Survey;

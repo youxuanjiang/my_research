@@ -37,6 +37,45 @@
   font-weight: bold;
 }
 
+.mobile_introduction {
+  padding-top: 20px;
+}
+
+.mobile_title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
+.mobile_scenarioContent {
+  border-radius:10px;
+  padding: 5px;
+  width: 75%;
+  transform: translateX(15%);
+  background: #D0D0CF;
+  color: #000;
+  font-size: 15px;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
+.mobile_survey {
+  margin-top: 20px;
+  width: 75%;
+  transform: translateX(15%);
+  font-size: 15px;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
+.mobile_surveyQuestion {
+  font-weight: bold;
+}
+
+.mobile_highLine {
+  color: #f00;
+  font-weight: bold;
+}
+
 /* in 為 true 時: */
 .scenarioEntered-enter {
   opacity: 0;

@@ -1,0 +1,6 @@
+
+> my-reseach@0.1.0 server
+> node src/server/app.js
+
+Succeed running on port 9437 !
+Connected MySQL!

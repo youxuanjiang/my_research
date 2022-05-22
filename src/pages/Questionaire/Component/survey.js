@@ -143,7 +143,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
       </div>
     </div>,
     <div>
-      <p className="surveyQuestion"> 3. 若沒有及時（在事情來不及之前）取得滿意的資訊的話，<span className="highLine">後果會非常嚴重</span>。(足以影響你長期的人生規劃)</p>
+      <p className="surveyQuestion"> 3. 若沒有及時（在事情來不及之前）取得滿意的資訊，所造成的代價是<span className="highLine">非常嚴重</span>的，足以影響你長期的人生規劃。</p>
       <div>
         非常不同意
         <input
@@ -213,7 +213,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
       </div>
     </div>,
     <div>
-      <p className="surveyQuestion"> 4. 就算沒有及時（在事情來不及之前）拿到滿意的答案，也<span className="highLine">只會造成一點點不便而已</span>。(只會影響到短期的規劃)</p>
+      <p className="surveyQuestion"> 4. 就算沒有及時（在事情來不及之前）拿到滿意的答案，所造成的代價其實也<span className="highLine">不會造成什麼影響</span>。</p>
       <div>
         非常不同意
         <input
@@ -283,7 +283,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
       </div>
     </div>,
     <div>
-      <p className="surveyQuestion"> 5. 我認為要回答這些問題是<span className="highLine">非常麻煩對方</span>的。</p>
+      <p className="surveyQuestion"> 5. 我認為要回答這些問題是<span className="highLine">會讓對方感到非常麻煩</span>的。</p>
       <div>
         非常不同意
         <input
@@ -353,7 +353,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
       </div>
     </div>,
     <div>
-      <p className="surveyQuestion"> 6. 我認為對方要回答這些問題是<span className="highLine">非常容易</span>的。</p>
+      <p className="surveyQuestion"> 6. 我認為要回答這些問題對<span className="highLine">對方來說是非常容易</span>的。</p>
       <div>
         非常不同意
         <input

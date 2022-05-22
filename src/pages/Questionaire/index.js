@@ -145,16 +145,42 @@ const Questionaire = ({setPages, setSurveyResult}) => {
           return prev - 1;
         });
       }
+      if (scenarioArrCount < result.length) {
+        result[scenarioArrCount] = {
+          "tag":{
+            "Category":questions[scenarioArrCount].Category,
+            "Importance":questions[scenarioArrCount].Importance,
+            "Effort":questions[scenarioArrCount].Effort,
+            "Urgency":questions[scenarioArrCount].Urgency
+          },
+          "usgencyScore":urgency,
+          "importanceScore":importance,
+          "effortScore":effort,
+          "paymentScore":payment
+        };
+      }else{
+        result.push({
+          "tag":{
+            "Category":questions[scenarioArrCount].Category,
+            "Importance":questions[scenarioArrCount].Importance,
+            "Effort":questions[scenarioArrCount].Effort,
+            "Urgency":questions[scenarioArrCount].Urgency
+          },
+          "usgencyScore":urgency,
+          "importanceScore":importance,
+          "effortScore":effort,
+          "paymentScore":payment
+        });
+      }
       scenarioArrCount -= 1;
-      const prevResult = result.pop();
       setImageUrl(questions[scenarioArrCount].image_url);
       setScenario(questions[scenarioArrCount].Question.split("<->\r\n")[0].split('\r\n'));
       setHighline(questions[scenarioArrCount].Question.split("<->\r\n")[1].split('\r\n'));
       setSubCount(questions[scenarioArrCount].QuestionNo);
-      setUrgency(prevResult.usgencyScore);
-      setImportance(prevResult.importanceScore);
-      setEffort(prevResult.effortScore);
-      setPayment(prevResult.paymentScore);
+      setUrgency(result[scenarioArrCount].usgencyScore);
+      setImportance(result[scenarioArrCount].importanceScore);
+      setEffort(result[scenarioArrCount].effortScore);
+      setPayment(result[scenarioArrCount].paymentScore);
     }
   }
 
@@ -163,18 +189,33 @@ const Questionaire = ({setPages, setSurveyResult}) => {
       alert("問題要填喔你這小淘氣！");
     }
     else {
-      result.push({
-        "tag":{
-          "Category":questions[scenarioArrCount].Category,
-          "Importance":questions[scenarioArrCount].Importance,
-          "Effort":questions[scenarioArrCount].Effort,
-          "Urgency":questions[scenarioArrCount].Urgency
-        },
-        "usgencyScore":urgency,
-        "importanceScore":importance,
-        "effortScore":effort,
-        "paymentScore":payment
-      });
+      if (scenarioArrCount < result.length) {
+        result[scenarioArrCount] = {
+          "tag":{
+            "Category":questions[scenarioArrCount].Category,
+            "Importance":questions[scenarioArrCount].Importance,
+            "Effort":questions[scenarioArrCount].Effort,
+            "Urgency":questions[scenarioArrCount].Urgency
+          },
+          "usgencyScore":urgency,
+          "importanceScore":importance,
+          "effortScore":effort,
+          "paymentScore":payment
+        };
+      }else{
+        result.push({
+          "tag":{
+            "Category":questions[scenarioArrCount].Category,
+            "Importance":questions[scenarioArrCount].Importance,
+            "Effort":questions[scenarioArrCount].Effort,
+            "Urgency":questions[scenarioArrCount].Urgency
+          },
+          "usgencyScore":urgency,
+          "importanceScore":importance,
+          "effortScore":effort,
+          "paymentScore":payment
+        });
+      }
       if (buttonValue === '下一題') {
         setScenarioEntered(false);
         // wait for animation
@@ -195,10 +236,18 @@ const Questionaire = ({setPages, setSurveyResult}) => {
         setScenario(questions[scenarioArrCount].Question.split("<->\r\n")[0].split('\r\n'));
         setHighline(questions[scenarioArrCount].Question.split("<->\r\n")[1].split('\r\n'));
         setSubCount(questions[scenarioArrCount].QuestionNo);
-        setUrgency([0,0]);
-        setImportance([0,0]);
-        setEffort([0,0]);
-        setPayment(0);
+        if (scenarioArrCount < result.length) {
+          setUrgency(result[scenarioArrCount].usgencyScore);
+          setImportance(result[scenarioArrCount].importanceScore);
+          setEffort(result[scenarioArrCount].effortScore);
+          setPayment(result[scenarioArrCount].paymentScore);
+        }
+        else{
+          setUrgency([0,0]);
+          setImportance([0,0]);
+          setEffort([0,0]);
+          setPayment(0);
+        }
       }else {
         console.log(result);
         setSurveyResult(result);

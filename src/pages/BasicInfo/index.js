@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useBeforeunload } from 'react-beforeunload';
 import { API_HOST } from "../../global/constants";
 import "./index.css";
 
@@ -16,6 +17,12 @@ async function createUserCode() {
 }
 
 const BasicInfo = ({setPages, setBasicInfo}) => {
+
+  // 重新整理、上一頁下一頁、離開時再次詢問。
+  useBeforeunload(() => {
+    return '你還沒有成功提交問卷喔！確定要離開了嗎？'
+  });
+
   const [sex, setSex] = useState('');
   const [age, setAge] = useState('');
   const [carrier, setCarrier] = useState('');

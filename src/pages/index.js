@@ -16,6 +16,7 @@ const Pages = () => {
     )
   }
   else if (pages === 1) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return (
       <ParticipantIllustrate
         setPages={setPages}
@@ -23,6 +24,7 @@ const Pages = () => {
     );
   }
   else if (pages === 2){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return (
       <Questionaire
         setPages={setPages}
@@ -32,6 +34,7 @@ const Pages = () => {
   }
 
   else if (pages === 3) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return (
       <BasicInfo
         setPages={setPages}
@@ -41,6 +44,7 @@ const Pages = () => {
   }
 
   else if (pages === 4){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     return (
       <ThankPage
         surveyResult={surveyResult}

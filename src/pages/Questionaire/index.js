@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { CSSTransition } from 'react-transition-group'
+import { useBeforeunload } from 'react-beforeunload';
 import { API_HOST } from "../../global/constants";
 import Scenario from "./Component/scenario";
 import Survey from "./Component/survey";
@@ -18,33 +19,35 @@ async function fetchData(setScenario, setImageUrl, setHighline, fecthStatus) {
   const groupTag = [];
   try {
     const res = await axios.get(API_HOST + '/questionaire');
-    res.data.map((question) => {
-      const tmp_groupTag = question.Category + '/' + question.Importance + '/' + question.Effort;
-      try {
-        tmp_questions_group[tmp_groupTag].push(question);
-      } catch (e) {
-        groupTag.push(tmp_groupTag);
-        tmp_questions_group[tmp_groupTag] = [];
-        tmp_questions_group[tmp_groupTag].push(question);
+    res.data.forEach((question) => {
+      // 從資料庫篩選真正要用的題目
+      if (!question.Category.includes('!')) {
+        const tmp_groupTag = question.Category + '/' + question.Importance + '/' + question.Effort;
+        try {
+          tmp_questions_group[tmp_groupTag].push(question);
+        } catch (e) {
+          groupTag.push(tmp_groupTag);
+          tmp_questions_group[tmp_groupTag] = [];
+          tmp_questions_group[tmp_groupTag].push(question);
+        }
       }
-
     });
   } catch (e) {
     console.log(e);
   }
-  groupTag.map((tag) => {
+  groupTag.forEach((tag) => {
     const urgency = ['high','low'];
     const randomUrgency = urgency[Math.floor(Math.random() * urgency.length)];
     const ifPush = Math.floor(Math.random() * 2)
     if(randomUrgency === 'high'){
 
       if (ifPush) {
-        tmp_questions_group[tag].map((question) => {
+        tmp_questions_group[tag].forEach((question) => {
           if (question.Urgency === 'high' && question.QuestionNo === 1) {
             questions.push(question);
           }
         });
-        tmp_questions_group[tag].map((question) => {
+        tmp_questions_group[tag].forEach((question) => {
           if (question.Urgency === 'low' && question.QuestionNo === 2) {
             questions.push(question);
           }
@@ -52,12 +55,12 @@ async function fetchData(setScenario, setImageUrl, setHighline, fecthStatus) {
       }
 
       else {
-        tmp_questions_group[tag].map((question) => {
+        tmp_questions_group[tag].forEach((question) => {
           if (question.Urgency === 'low' && question.QuestionNo === 2) {
             questions = [question].concat(questions);
           }
         });
-        tmp_questions_group[tag].map((question) => {
+        tmp_questions_group[tag].forEach((question) => {
           if (question.Urgency === 'high' && question.QuestionNo === 1) {
             questions = [question].concat(questions);
           }
@@ -66,12 +69,12 @@ async function fetchData(setScenario, setImageUrl, setHighline, fecthStatus) {
     }else{
 
       if (ifPush) {
-        tmp_questions_group[tag].map((question) => {
+        tmp_questions_group[tag].forEach((question) => {
           if (question.Urgency === 'low' && question.QuestionNo === 1) {
             questions.push(question);
           }
         });
-        tmp_questions_group[tag].map((question) => {
+        tmp_questions_group[tag].forEach((question) => {
           if (question.Urgency === 'high' && question.QuestionNo === 2) {
             questions.push(question);
           }
@@ -79,12 +82,12 @@ async function fetchData(setScenario, setImageUrl, setHighline, fecthStatus) {
       }
 
       else {
-        tmp_questions_group[tag].map((question) => {
+        tmp_questions_group[tag].forEach((question) => {
           if (question.Urgency === 'high' && question.QuestionNo === 2) {
             questions = [question].concat(questions);
           }
         });
-        tmp_questions_group[tag].map((question) => {
+        tmp_questions_group[tag].forEach((question) => {
           if (question.Urgency === 'low' && question.QuestionNo === 1) {
             questions = [question].concat(questions);
           }
@@ -104,6 +107,12 @@ function delay(n){
 }
 
 const Questionaire = ({setPages, setSurveyResult}) => {
+
+  // 重新整理、上一頁下一頁、離開時再次詢問。
+  useBeforeunload(() => {
+    return '確定要離開頁面嗎？'
+  });
+
   const [scenario, setScenario] = useState([]);
   const [imageUrl, setImageUrl] = useState([]);
   const [highline, setHighline] = useState([]);
@@ -134,6 +143,7 @@ const Questionaire = ({setPages, setSurveyResult}) => {
       alert("這是第一題，沒有上一題了啦！")
     }
     else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       if (buttonValue === "填寫基本資料") {
         setButtonValue("下一題")
       }
@@ -189,6 +199,7 @@ const Questionaire = ({setPages, setSurveyResult}) => {
       alert("問題要填喔你這小淘氣！");
     }
     else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       if (scenarioArrCount < result.length) {
         result[scenarioArrCount] = {
           "tag":{
@@ -249,9 +260,11 @@ const Questionaire = ({setPages, setSurveyResult}) => {
           setPayment(0);
         }
       }else {
-        console.log(result);
-        setSurveyResult(result);
-        setPages(3);
+        if(window.confirm("確定要提交問卷了嗎？提交之後就沒辦法再修改了唷！")){
+          console.log(result);
+          setSurveyResult(result);
+          setPages(3);
+        }
       }
     }
   }

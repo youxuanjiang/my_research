@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffort, payment, setPayment}) => {
   const questionList = [
     <div>
-      <p className="surveyQuestion"> 1. 我已經<span className="highLine">快沒有時間</span>去等人來回覆我了。</p>
+      <p className="surveyQuestion"> 1. 我已經<span className="highLine">快沒有時間</span>去等人來回覆我，若沒有現在拿到答案的話就來不及了。</p>
       <div>
         非常不同意
         <input
@@ -33,6 +33,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={urgency[0] === 4}
@@ -42,6 +43,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={urgency[0] === 5}
@@ -73,7 +75,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
       </div>
     </div>,
     <div>
-      <p className="surveyQuestion"> 2. 目前等待的時間<span className="highLine">還非常充裕</span>。</p>
+      <p className="surveyQuestion"> 2. 目前等待的時間<span className="highLine">還非常充裕</span>，還不需要立刻拿到答案。</p>
       <div>
         非常不同意
         <input
@@ -103,6 +105,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={urgency[1] === 4}
@@ -112,6 +115,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={urgency[1] === 3}
@@ -143,7 +147,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
       </div>
     </div>,
     <div>
-      <p className="surveyQuestion"> 3. 若沒有及時（在事情來不及之前）取得滿意的資訊，所造成的代價是<span className="highLine">非常嚴重</span>的，足以影響你長期的人生規劃。</p>
+      <p className="surveyQuestion"> 3. 若沒有在事情來不及之前解決問題的話，所造成的代價是<span className="highLine">非常嚴重</span>的，足以影響你長期的人生規劃。</p>
       <div>
         非常不同意
         <input
@@ -173,6 +177,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={importance[0] === 4}
@@ -182,6 +187,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={importance[0] === 5}
@@ -213,7 +219,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
       </div>
     </div>,
     <div>
-      <p className="surveyQuestion"> 4. 就算沒有及時（在事情來不及之前）拿到滿意的答案，所造成的代價其實也<span className="highLine">不會造成什麼影響</span>。</p>
+      <p className="surveyQuestion"> 4. 就算沒有在事情來不及之前解決問題，所造成的代價其實也<span className="highLine">不會造成什麼影響</span>。</p>
       <div>
         非常不同意
         <input
@@ -243,6 +249,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={importance[1] === 4}
@@ -252,6 +259,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={importance[1] === 3}
@@ -313,6 +321,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={effort[0] === 4}
@@ -322,6 +331,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={effort[0] === 5}
@@ -383,6 +393,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={effort[1] === 4}
@@ -392,6 +403,7 @@ const Survey = ({urgency, setUrgency, importance, setImportance, effort, setEffo
             }
           )}
         />
+        <label> - </label>
         <input
           type="radio"
           checked={effort[1] === 3}

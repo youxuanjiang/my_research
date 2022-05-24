@@ -120,9 +120,9 @@ const Questionaire = ({setPages, setSurveyResult}) => {
   const [buttonValue, setButtonValue] = useState('下一題');
   const [count, setCount] = useState(1);
   const [subCount, setSubCount] = useState(1);
-  const [urgency, setUrgency] = useState([0,0]);
-  const [importance, setImportance] = useState([0,0]);
-  const [effort, setEffort] = useState([0,0]);
+  const [urgency, setUrgency] = useState(0);
+  const [importance, setImportance] = useState(0);
+  const [effort, setEffort] = useState(0);
   const [payment, setPayment] = useState(0);
 
   const fecthStatus = useRef(true);

@@ -12,6 +12,18 @@ const result = [];
 var scenarioArrCount = 0;
 // import "./index.css";
 
+
+async function createPilotCode() {
+  try {
+    const res = await axios.get(API_HOST + '/pilotinfo');
+    const userNum = res.data.length + 1;
+    return 'Pilot_' + userNum;
+  } catch (e) {
+    console.log(e);
+    return 'error create pilot code';
+  }
+}
+
 async function fetchData(setScenario, setImageUrl, setHighline, fecthStatus) {
   fecthStatus.current = false;
   // 若沒辦法成功送出request看這篇：https://shubo.io/what-is-cors/
@@ -106,7 +118,7 @@ function delay(n){
     });
 }
 
-const Questionaire = ({setPages, setSurveyResult}) => {
+const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
 
   // 重新整理、上一頁下一頁、離開時再次詢問。
   useBeforeunload(() => {
@@ -261,9 +273,13 @@ const Questionaire = ({setPages, setSurveyResult}) => {
         }
       }else {
         if(window.confirm("確定要提交問卷了嗎？提交之後就沒辦法再修改了唷！")){
+          const pilot = await createPilotCode();
           console.log(result);
           setSurveyResult(result);
-          setPages(3);
+          setBasicInfo({
+            "pilot":pilot
+          });
+          setPages(4);
         }
       }
     }

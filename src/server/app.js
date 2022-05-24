@@ -54,9 +54,54 @@ server.post('/userinfo', (req, res) => {
       console.log(`Userinfo ${JSON.stringify(userinfo)} save correct`);
     });
   });
+});
 
+server.get('/pilotinfo', (req, res) => {
+  console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
+  console.log(`Status Code: ${res.statusCode}\n-----\n`);
+  db.query('select * from pilot_table', function(err, rows) {
+    if (err) throw err;
+    res.writeHead(200);
+    res.end(JSON.stringify(rows));
+  });
+});
+
+server.post('/pilotinfo', (req, res) => {
+  console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
+  console.log(`Status Code: ${res.statusCode}\n-----`);
+
+  let userinfo;
+  req.on('data', function (chunk) {
+    pilotinfo = JSON.parse('' + chunk);
+    console.log(`Data chunk available: ${chunk}`);
+    db.query(`insert into pilot_table (Pilot) values ('${pilotinfo.pilot}')`, function(err, result) {
+      if (err) throw err;
+      console.log(`Pilotinfo ${JSON.stringify(pilotinfo)} save correct`);
+    });
+  });
+});
+
+server.post('/pilotresult', (req, res) => {
+  console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
+  console.log(`Status Code: ${res.statusCode}\n-----`);
+
+  let result;
+  req.on('data', function (chunk) {
+    result = JSON.parse('' + chunk);
+    surveyResult = [];
+    let count = Object.keys(result).length - 2;
+    while(count >= 0){
+      surveyResult.push([result.Pilot, result[count].tag.Category, result[count].tag.Importance, result[count].tag.Effort, result[count].tag.Urgency, result[count].importanceScore, result[count].effortScore, result[count].usgencyScore]);
+      count--;
+    }
+    db.query(`insert into pilot_result (Pilot, Category, Importance, Effort, Urgency, ImportanceScore, EffortScore, UrgencyScore) values ?`, [surveyResult], function(err, result) {
+      if (err) throw err;
+      console.log(`Result ${surveyResult} save correct`);
+    });
+    console.log(`Data chunk available: ${chunk}`);
+  });
   req.on('end', () => {
-      console.log(userinfo);
+      console.log(result);
       console.log('-----\n');
       res.writeHead(200);
       res.end();

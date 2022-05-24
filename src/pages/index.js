@@ -29,6 +29,7 @@ const Pages = () => {
       <Questionaire
         setPages={setPages}
         setSurveyResult={setSurveyResult}
+        setBasicInfo={setBasicInfo}
       />
     );
   }

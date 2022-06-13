@@ -31,11 +31,11 @@ const BasicInfo = ({setPages, setBasicInfo}) => {
 
   async function clickButton() {
     if (!(sex && age && carrier && education)){
-      alert("資訊要好好填喔你這小淘氣！");
+      alert("資訊記得要填哦！");
     }
     else {
       if (email !== '' && !email.includes('@')) {
-        alert("要填信箱的話記得要填對唷小淘氣～");
+        alert("信箱格式有誤！");
       }
       else {
         const user = await createUserCode();

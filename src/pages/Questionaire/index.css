@@ -143,3 +143,7 @@
   font-size: 20px;
   font-family: "LiGothic", "FangSong", Arial, serif;
 }
+
+.slider-width {
+  width: 75%;
+}

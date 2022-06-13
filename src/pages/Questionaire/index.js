@@ -24,92 +24,45 @@ async function createPilotCode() {
   }
 }
 
-async function fetchData(setScenario, setImageUrl, setHighline, fecthStatus) {
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
+async function fetchData(setScenario, setImageUrl, fecthStatus) {
   fecthStatus.current = false;
   // 若沒辦法成功送出request看這篇：https://shubo.io/what-is-cors/
-  const tmp_questions_group = {};
-  const groupTag = [];
   try {
     const res = await axios.get(API_HOST + '/questionaire');
     res.data.forEach((question) => {
       // 從資料庫篩選真正要用的題目
       if (!question.Category.includes('!')) {
-        const tmp_groupTag = question.Category + '/' + question.Importance + '/' + question.Effort;
         try {
-          tmp_questions_group[tmp_groupTag].push(question);
+          questions.push(question);
         } catch (e) {
-          groupTag.push(tmp_groupTag);
-          tmp_questions_group[tmp_groupTag] = [];
-          tmp_questions_group[tmp_groupTag].push(question);
+          console.log('error while add question: ' + e);
         }
       }
     });
   } catch (e) {
-    console.log(e);
+    console.log('error while get API: ' + e);
   }
-  groupTag.forEach((tag) => {
-    const urgency = ['high','low'];
-    const randomUrgency = urgency[Math.floor(Math.random() * urgency.length)];
-    const ifPush = Math.floor(Math.random() * 2)
-    if(randomUrgency === 'high'){
-
-      if (ifPush) {
-        tmp_questions_group[tag].forEach((question) => {
-          if (question.Urgency === 'high' && question.QuestionNo === 1) {
-            questions.push(question);
-          }
-        });
-        tmp_questions_group[tag].forEach((question) => {
-          if (question.Urgency === 'low' && question.QuestionNo === 2) {
-            questions.push(question);
-          }
-        });
-      }
-
-      else {
-        tmp_questions_group[tag].forEach((question) => {
-          if (question.Urgency === 'low' && question.QuestionNo === 2) {
-            questions = [question].concat(questions);
-          }
-        });
-        tmp_questions_group[tag].forEach((question) => {
-          if (question.Urgency === 'high' && question.QuestionNo === 1) {
-            questions = [question].concat(questions);
-          }
-        });
-      }
-    }else{
-
-      if (ifPush) {
-        tmp_questions_group[tag].forEach((question) => {
-          if (question.Urgency === 'low' && question.QuestionNo === 1) {
-            questions.push(question);
-          }
-        });
-        tmp_questions_group[tag].forEach((question) => {
-          if (question.Urgency === 'high' && question.QuestionNo === 2) {
-            questions.push(question);
-          }
-        });
-      }
-
-      else {
-        tmp_questions_group[tag].forEach((question) => {
-          if (question.Urgency === 'high' && question.QuestionNo === 2) {
-            questions = [question].concat(questions);
-          }
-        });
-        tmp_questions_group[tag].forEach((question) => {
-          if (question.Urgency === 'low' && question.QuestionNo === 1) {
-            questions = [question].concat(questions);
-          }
-        });
-      }
-    }
-  });
-  setScenario(questions[scenarioArrCount].Question.split("<->\r\n")[0].split('\r\n'));
+  shuffle(questions);
+  setScenario(questions[scenarioArrCount].Question.split('\r\n'));
   setImageUrl(questions[scenarioArrCount].image_url);
-  setHighline(questions[scenarioArrCount].Question.split("<->\r\n")[1].split('\r\n'));
 }
 
 function delay(n){
@@ -127,14 +80,15 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
 
   const [scenario, setScenario] = useState([]);
   const [imageUrl, setImageUrl] = useState([]);
-  const [highline, setHighline] = useState([]);
   const [scenarioEntered, setScenarioEntered] = useState(false);
   const [buttonValue, setButtonValue] = useState('下一題');
   const [count, setCount] = useState(1);
   const [subCount, setSubCount] = useState(1);
+  const [plausibility, setPlausibility] = useState(0);
   const [urgency, setUrgency] = useState(0);
   const [importance, setImportance] = useState(0);
   const [effort, setEffort] = useState(0);
+  const [crowdsourcingType, setCrowdsourcingType] = useState('');
   const [payment, setPayment] = useState(0);
 
   const fecthStatus = useRef(true);
@@ -142,7 +96,7 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
   // 第一次渲染畫面的時候，只會執行一次
   useEffect(() => {
     if(!fecthStatus.current) return;
-    fetchData(setScenario, setImageUrl, setHighline, fecthStatus);
+    fetchData(setScenario, setImageUrl, fecthStatus);
   }, []);
 
   useEffect(() => {
@@ -162,81 +116,72 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
       setScenarioEntered(false);
       // wait for animation
       await delay(0.4);
-      if (scenarioArrCount % 2 === 0) {
-        setCount((prev) => {
-          return prev - 1;
-        });
-      }
-      if (scenarioArrCount < result.length) {
-        result[scenarioArrCount] = {
-          "tag":{
-            "Category":questions[scenarioArrCount].Category,
-            "Importance":questions[scenarioArrCount].Importance,
-            "Effort":questions[scenarioArrCount].Effort,
-            "Urgency":questions[scenarioArrCount].Urgency
-          },
-          "usgencyScore":urgency,
-          "importanceScore":importance,
-          "effortScore":effort,
-          "paymentScore":payment
-        };
-      }else{
-        result.push({
-          "tag":{
-            "Category":questions[scenarioArrCount].Category,
-            "Importance":questions[scenarioArrCount].Importance,
-            "Effort":questions[scenarioArrCount].Effort,
-            "Urgency":questions[scenarioArrCount].Urgency
-          },
-          "usgencyScore":urgency,
-          "importanceScore":importance,
-          "effortScore":effort,
-          "paymentScore":payment
-        });
-      }
+      setCount((prev) => {
+        return prev - 1;
+      });
+
+      result[scenarioArrCount] = {
+        "tag":{
+          "Category":questions[scenarioArrCount].Category,
+          "Plausibility":questions[scenarioArrCount].Plausibility,
+          "Importance":questions[scenarioArrCount].Importance,
+          "Urgency":questions[scenarioArrCount].Urgency
+        },
+        "plausibilityScore":plausibility,
+        "urgencyScore":urgency,
+        "importanceScore":importance,
+        "effortScore":effort,
+        "crowdsourcingType":crowdsourcingType,
+        "payment":payment
+      };
+
       scenarioArrCount -= 1;
       setImageUrl(questions[scenarioArrCount].image_url);
-      setScenario(questions[scenarioArrCount].Question.split("<->\r\n")[0].split('\r\n'));
-      setHighline(questions[scenarioArrCount].Question.split("<->\r\n")[1].split('\r\n'));
-      setSubCount(questions[scenarioArrCount].QuestionNo);
-      setUrgency(result[scenarioArrCount].usgencyScore);
+      setScenario(questions[scenarioArrCount].Question.split('\r\n'));
+      setPlausibility(result[scenarioArrCount].plausibilityScore);
+      setUrgency(result[scenarioArrCount].urgencyScore);
       setImportance(result[scenarioArrCount].importanceScore);
       setEffort(result[scenarioArrCount].effortScore);
-      setPayment(result[scenarioArrCount].paymentScore);
+      setCrowdsourcingType(result[scenarioArrCount].crowdsourcingType);
+      setPayment(result[scenarioArrCount].payment);
     }
   }
 
   async function clickButton() {
-    if (!(urgency && importance && effort && payment)){
-      alert("問題要填喔你這小淘氣！");
-    }
-    else {
+    // if (!(urgency && importance && effort)){
+    //   alert("問題要填！");
+    // }
+    // else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       if (scenarioArrCount < result.length) {
         result[scenarioArrCount] = {
           "tag":{
             "Category":questions[scenarioArrCount].Category,
+            "Plausibility":questions[scenarioArrCount].Plausibility,
             "Importance":questions[scenarioArrCount].Importance,
-            "Effort":questions[scenarioArrCount].Effort,
             "Urgency":questions[scenarioArrCount].Urgency
           },
-          "usgencyScore":urgency,
+          "plausibilityScore":plausibility,
+          "urgencyScore":urgency,
           "importanceScore":importance,
           "effortScore":effort,
-          "paymentScore":payment
+          "crowdsourcingType":crowdsourcingType,
+          "payment":payment
         };
       }else{
         result.push({
           "tag":{
             "Category":questions[scenarioArrCount].Category,
+            "Plausibility":questions[scenarioArrCount].Plausibility,
             "Importance":questions[scenarioArrCount].Importance,
-            "Effort":questions[scenarioArrCount].Effort,
             "Urgency":questions[scenarioArrCount].Urgency
           },
-          "usgencyScore":urgency,
+          "plausibilityScore":plausibility,
+          "urgencyScore":urgency,
           "importanceScore":importance,
           "effortScore":effort,
-          "paymentScore":payment
+          "crowdsourcingType":crowdsourcingType,
+          "payment":payment
         });
       }
       if (buttonValue === '下一題') {
@@ -245,30 +190,31 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         await delay(0.4);
         // console.log(result[scenarioArrCount]);
         scenarioArrCount += 1;
-        if (scenarioArrCount % 2 === 0) {
-          setCount((prev) => {
-            return prev + 1;
-          });
-        }
+        setCount((prev) => {
+          return prev + 1;
+        });
+
         if (questions.length === scenarioArrCount+1){
           setButtonValue('填寫基本資料')
         }
         // console.log(scenarioArrCount);
         // console.log(questions[scenarioArrCount].Question.split('\n'));
         setImageUrl(questions[scenarioArrCount].image_url);
-        setScenario(questions[scenarioArrCount].Question.split("<->\r\n")[0].split('\r\n'));
-        setHighline(questions[scenarioArrCount].Question.split("<->\r\n")[1].split('\r\n'));
-        setSubCount(questions[scenarioArrCount].QuestionNo);
+        setScenario(questions[scenarioArrCount].Question.split('\r\n'));
         if (scenarioArrCount < result.length) {
-          setUrgency(result[scenarioArrCount].usgencyScore);
+          setPlausibility(result[scenarioArrCount].plausibilityScore);
+          setUrgency(result[scenarioArrCount].urgencyScore);
           setImportance(result[scenarioArrCount].importanceScore);
           setEffort(result[scenarioArrCount].effortScore);
-          setPayment(result[scenarioArrCount].paymentScore);
+          setCrowdsourcingType(result[scenarioArrCount].crowdsourcingType);
+          setPayment(result[scenarioArrCount].payment);
         }
         else{
-          setUrgency([0,0]);
-          setImportance([0,0]);
-          setEffort([0,0]);
+          setPlausibility(0);
+          setUrgency(0);
+          setImportance(0);
+          setEffort(0);
+          setCrowdsourcingType('');
           setPayment(0);
         }
       }else {
@@ -283,7 +229,7 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         }
       }
     }
-  }
+  // }
   return (
     <div>
       <CSSTransition
@@ -293,17 +239,20 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         unmountOnExit={false}
       >
         <Scenario
-          number={`${count} - ${subCount}`}
+          number={`${count}`}
           scenario={scenario}
           image={imageUrl}
-          highline={highline}
         />
       </CSSTransition>
       <Survey
+        plausibility={plausibility}
+        setPlausibility={setPlausibility}
         urgency={urgency}
         setUrgency={setUrgency}
         importance={importance}
         setImportance={setImportance}
+        crowdsourcingType={crowdsourcingType}
+        setCrowdsourcingType={setCrowdsourcingType}
         effort={effort}
         setEffort={setEffort}
         payment={payment}

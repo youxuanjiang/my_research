@@ -24,3 +24,7 @@ yarn-error.log*
 
 /src/server/config
 /src/global
+
+check-server-running.sh
+server_status.txt
+timmer-for-check-server

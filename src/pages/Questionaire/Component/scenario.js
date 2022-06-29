@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 
-const Scenario = ({ number, scenario, image, highline }) => {
+const Scenario = ({ number, test, scenario, image }) => {
   const isMobile = window.innerWidth <= 500;
 
   if (isMobile) {
@@ -8,6 +8,7 @@ const Scenario = ({ number, scenario, image, highline }) => {
       <div className="mobile_scenario">
         <h1 className="mobile_title">情境 { number }</h1>
         <div className="mobile_scenarioContent">
+          <p>{test}</p>
           <img
           src={image}
           style={{ width: "100%", margin: "30px 0" }}
@@ -24,6 +25,7 @@ const Scenario = ({ number, scenario, image, highline }) => {
       <div className="scenario">
         <h1 className="title">情境 { number }</h1>
         <div className="scenarioContent">
+          <p>{test}</p>
           <img
           src={image}
           style={{ width: "100%", margin: "30px 0" }}

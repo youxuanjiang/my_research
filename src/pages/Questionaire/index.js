@@ -42,25 +42,472 @@ function shuffle(array) {
   return array;
 }
 
-async function fetchData(setScenario, setImageUrl, fecthStatus) {
+async function fetchData(setScenario, setTest, setImageUrl, fecthStatus) {
   fecthStatus.current = false;
   // 若沒辦法成功送出request看這篇：https://shubo.io/what-is-cors/
   try {
     const res = await axios.get(API_HOST + '/questionaire');
+    const crowd_occupancy_order = Math.floor( Math.random() * 5 ) + 1;
+    const question_crowd_occupancy = [];
+    const location_time_order = Math.floor( Math.random() * 5 ) + 1;
+    const question_location_time = [];
     res.data.forEach((question) => {
       // 從資料庫篩選真正要用的題目
-      if (!question.Category.includes('!')) {
+      if (question.Category.includes('房') || question.Category.includes('餐') || question.Category.includes('館') || question.Category.includes('停車')) {
         try {
-          questions.push(question);
+          if (crowd_occupancy_order === 1) {
+            if (question.Category.includes('健身房')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('圖書館')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('桌球館')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('餐廳')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('停車場')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+          }
+          if (crowd_occupancy_order === 2) {
+            if (question.Category.includes('圖書館')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('桌球館')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('餐廳')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('停車場')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('健身房')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+          }
+          if (crowd_occupancy_order === 3) {
+            if (question.Category.includes('桌球館')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('餐廳')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('停車場')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('健身房')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('圖書館')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+          }
+          if (crowd_occupancy_order === 4) {
+            if (question.Category.includes('餐廳')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('停車場')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('健身房')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('圖書館')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('桌球館')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+          }
+          if (crowd_occupancy_order === 5) {
+            if (question.Category.includes('停車場')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('健身房')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('圖書館')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('桌球館')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+            if (question.Category.includes('餐廳')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_crowd_occupancy.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_crowd_occupancy.push(question);
+              }
+            }
+          }
+        } catch (e) {
+          console.log('error while add question: ' + e);
+        }
+      }
+      else {
+        try {
+          if (location_time_order === 1) {
+            if (question.Category.includes('火車')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('公車')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('客運')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('船')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('飛機')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+          }
+          if (location_time_order === 2) {
+            if (question.Category.includes('公車')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('客運')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('船')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('飛機')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('火車')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+          }
+          if (location_time_order === 3) {
+            if (question.Category.includes('客運')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('船')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('飛機')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('火車')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('公車')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+          }
+          if (location_time_order === 4) {
+            if (question.Category.includes('船')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('飛機')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('火車')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('公車')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('客運')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+          }
+          if (location_time_order === 5) {
+            if (question.Category.includes('飛機')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('火車')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('公車')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('客運')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+            }
+            if (question.Category.includes('船')) {
+              if (question.Expected.data[0] === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
+                question_location_time.push(question);
+              }
+              if (question.Expected.data[0] === 0 && question.Plausibility === 'AA' && question.Urgency === 'LOW') {
+                question_location_time.push(question);
+              }
+            }
+          }
         } catch (e) {
           console.log('error while add question: ' + e);
         }
       }
     });
+    shuffle(question_crowd_occupancy);
+    shuffle(question_location_time);
+    for (let i = 0; i < question_crowd_occupancy.length; i++) {
+      questions.push(question_crowd_occupancy[i]);
+      questions.push(question_location_time[i])
+    }
   } catch (e) {
     console.log('error while get API: ' + e);
   }
-  shuffle(questions);
+  let _expected, _plausibility;
+  if (questions[scenarioArrCount].Expected.data[0] === 1) {
+    _expected = '有預期Ａ';
+    _plausibility = questions[scenarioArrCount].Plausibility;
+  }else {
+    _expected = '沒預期'
+    if (questions[scenarioArrCount].Plausibility === 'AA') {
+      _plausibility = '相符'
+    }else {
+      _plausibility = '不相符'
+    }
+  }
+  setTest(_expected + '，結果' + _plausibility + '，緊急程度' + questions[scenarioArrCount].Urgency);
   setScenario(questions[scenarioArrCount].Question.split('\r\n'));
   setImageUrl(questions[scenarioArrCount].ImageURL);
 }
@@ -79,6 +526,7 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
   });
 
   const [scenario, setScenario] = useState([]);
+  const [test, setTest] = useState([]);
   const [imageUrl, setImageUrl] = useState([]);
   const [scenarioEntered, setScenarioEntered] = useState(false);
   const [buttonValue, setButtonValue] = useState('下一題');
@@ -96,7 +544,7 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
   // 第一次渲染畫面的時候，只會執行一次
   useEffect(() => {
     if(!fecthStatus.current) return;
-    fetchData(setScenario, setImageUrl, fecthStatus);
+    fetchData(setScenario, setTest, setImageUrl, fecthStatus);
   }, []);
 
   useEffect(() => {
@@ -136,6 +584,19 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
       };
 
       scenarioArrCount -= 1;
+      let _expected, _plausibility;
+      if (questions[scenarioArrCount].Expected.data[0] === 1) {
+        _expected = '有預期Ａ';
+        _plausibility = questions[scenarioArrCount].Plausibility;
+      }else {
+        _expected = '沒預期'
+        if (questions[scenarioArrCount].Plausibility === 'AA') {
+          _plausibility = '相符'
+        }else {
+          _plausibility = '不相符'
+        }
+      }
+      setTest(_expected + '，結果' + _plausibility + '，緊急程度' + questions[scenarioArrCount].Urgency);
       setImageUrl(questions[scenarioArrCount].ImageURL);
       setScenario(questions[scenarioArrCount].Question.split('\r\n'));
       setPlausibility(result[scenarioArrCount].plausibilityScore);
@@ -200,6 +661,19 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         // console.log(scenarioArrCount);
         // console.log(questions[scenarioArrCount].Question.split('\n'));
         setImageUrl(questions[scenarioArrCount].ImageURL);
+        let _expected, _plausibility;
+        if (questions[scenarioArrCount].Expected.data[0] === 1) {
+          _expected = '有預期Ａ';
+          _plausibility = questions[scenarioArrCount].Plausibility;
+        }else {
+          _expected = '沒預期'
+          if (questions[scenarioArrCount].Plausibility === 'AA') {
+            _plausibility = '相符'
+          }else {
+            _plausibility = '不相符'
+          }
+        }
+        setTest(_expected + '，結果' + _plausibility + '，緊急程度' + questions[scenarioArrCount].Urgency);
         setScenario(questions[scenarioArrCount].Question.split('\r\n'));
         if (scenarioArrCount < result.length) {
           setPlausibility(result[scenarioArrCount].plausibilityScore);
@@ -240,6 +714,7 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
       >
         <Scenario
           number={`${count}`}
+          test={test}
           scenario={scenario}
           image={imageUrl}
         />

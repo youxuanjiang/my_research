@@ -62,7 +62,7 @@ async function fetchData(setScenario, setImageUrl, fecthStatus) {
   }
   shuffle(questions);
   setScenario(questions[scenarioArrCount].Question.split('\r\n'));
-  setImageUrl(questions[scenarioArrCount].image_url);
+  setImageUrl(questions[scenarioArrCount].ImageURL);
 }
 
 function delay(n){
@@ -136,7 +136,7 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
       };
 
       scenarioArrCount -= 1;
-      setImageUrl(questions[scenarioArrCount].image_url);
+      setImageUrl(questions[scenarioArrCount].ImageURL);
       setScenario(questions[scenarioArrCount].Question.split('\r\n'));
       setPlausibility(result[scenarioArrCount].plausibilityScore);
       setUrgency(result[scenarioArrCount].urgencyScore);
@@ -199,7 +199,7 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         }
         // console.log(scenarioArrCount);
         // console.log(questions[scenarioArrCount].Question.split('\n'));
-        setImageUrl(questions[scenarioArrCount].image_url);
+        setImageUrl(questions[scenarioArrCount].ImageURL);
         setScenario(questions[scenarioArrCount].Question.split('\r\n'));
         if (scenarioArrCount < result.length) {
           setPlausibility(result[scenarioArrCount].plausibilityScore);

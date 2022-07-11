@@ -19,7 +19,7 @@ const ParticipantIllustrate = ({ setPages }) => {
   if (isMobile) {
     return (
       <div className="mobile_introduction">
-        <h1 className="mobile_title">參與者同意書</h1>
+        <h1 className="mobile_title">參與者研究說明書</h1>
         <div className="mobile_content"><h2>研究計畫資料</h2>
           <p>計畫名稱：事件偵測追蹤與文字可信度辨識技術開發 - 探討使用者對於地點即時資訊的群眾外包資源需求以及類型偏好<br/>
           執行單位：國立陽明交通大學資訊工程系<br/>
@@ -134,7 +134,7 @@ const ParticipantIllustrate = ({ setPages }) => {
   else{
     return (
       <div className="introduction">
-        <h1 className="title">參與者同意書</h1>
+        <h1 className="title">參與者研究說明書</h1>
         <div className="content"><h2>研究計畫資料</h2>
           <p>計畫名稱：事件偵測追蹤與文字可信度辨識技術開發 - 探討使用者對於地點即時資訊的群眾外包資源需求以及類型偏好<br/>
           執行單位：國立陽明交通大學資訊工程系<br/>

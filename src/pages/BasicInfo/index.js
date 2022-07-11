@@ -47,7 +47,7 @@ const BasicInfo = ({setPages, setBasicInfo}) => {
           "education":education,
           "email":email
         });
-        setPages(4);
+        setPages(5);
       }
     }
   }

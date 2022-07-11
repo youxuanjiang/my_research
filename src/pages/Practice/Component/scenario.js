@@ -6,9 +6,8 @@ const Scenario = ({ number, test, scenario, image }) => {
   if (isMobile) {
     return (
       <div className="mobile_scenario">
-        <h1 className="mobile_title">情境 { number }（共20個情境）</h1>
+        <h1 className="mobile_title">範例 { number }：{test}</h1>
         <div className="mobile_scenarioContent">
-          <p>{test}</p>
           <img
           src={image}
           style={{ width: "100%", margin: "30px 0" }}
@@ -23,9 +22,8 @@ const Scenario = ({ number, test, scenario, image }) => {
   else {
     return (
       <div className="scenario">
-        <h1 className="title">情境 { number }（共20個情境）</h1>
+        <h1 className="title">範例 { number }：{test}</h1>
         <div className="scenarioContent">
-          <p>{test}</p>
           <img
           src={image}
           style={{ width: "100%", margin: "30px 0" }}

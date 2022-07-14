@@ -547,8 +547,8 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
   const [expection, setExpection] = useState('');
   const [plausibility, setPlausibility] = useState('');
   const [crowdsourcingType, setCrowdsourcingType] = useState('');
-  const [effort, setEffort] = useState(0);
-  const [payment, setPayment] = useState(0);
+  const [crowdsourcingTypeWPay, setCrowdsourcingTypeWPay] = useState('');
+  const [additionalPayWill, setAdditionalPayWill] = useState(0);
 
   const fecthStatus = useRef(true);
 
@@ -589,9 +589,9 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         "consistancyScore":consistancy,
         "userExpection":expection,
         "userPlausibility":plausibility,
-        "effortScore":effort,
         "crowdsourcingType":crowdsourcingType,
-        "payment":payment
+        "crowdsourcingTypeWPay":crowdsourcingTypeWPay,
+        "additionalPayWill":additionalPayWill
       };
 
       scenarioArrCount -= 1;
@@ -617,9 +617,9 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
       setConsistancy(result[scenarioArrCount].consistancyScore);
       setExpection(result[scenarioArrCount].userExpection);
       setPlausibility(result[scenarioArrCount].userPlausibility);
-      setEffort(result[scenarioArrCount].effortScore);
       setCrowdsourcingType(result[scenarioArrCount].crowdsourcingType);
-      setPayment(result[scenarioArrCount].payment);
+      setCrowdsourcingTypeWPay(result[scenarioArrCount].crowdsourcingTypeWPay);
+      setAdditionalPayWill(result[scenarioArrCount].additionalPayWill);
     }
   }
 
@@ -640,9 +640,9 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
           "consistancyScore":consistancy,
           "userExpection":expection,
           "userPlausibility":plausibility,
-          "effortScore":effort,
           "crowdsourcingType":crowdsourcingType,
-          "payment":payment
+          "crowdsourcingTypeWPay":crowdsourcingTypeWPay,
+          "additionalPayWill":additionalPayWill
         };
       }else{
         result.push({
@@ -655,9 +655,9 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
           "consistancyScore":consistancy,
           "userExpection":expection,
           "userPlausibility":plausibility,
-          "effortScore":effort,
           "crowdsourcingType":crowdsourcingType,
-          "payment":payment
+          "crowdsourcingTypeWPay":crowdsourcingTypeWPay,
+          "additionalPayWill":additionalPayWill
         });
       }
       if (buttonValue === '下一題') {
@@ -696,18 +696,18 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
           setConsistancy(result[scenarioArrCount].consistancyScore);
           setExpection(result[scenarioArrCount].userExpection);
           setPlausibility(result[scenarioArrCount].userPlausibility);
-          setEffort(result[scenarioArrCount].effortScore);
           setCrowdsourcingType(result[scenarioArrCount].crowdsourcingType);
-          setPayment(result[scenarioArrCount].payment);
+          setCrowdsourcingTypeWPay(result[scenarioArrCount].crowdsourcingTypeWPay);
+          setAdditionalPayWill(result[scenarioArrCount].additionalPayWill);
         }
         else{
           setUrgency(0);
           setConsistancy(0);
           setExpection('');
           setPlausibility('');
-          setEffort(0);
           setCrowdsourcingType('');
-          setPayment(0);
+          setCrowdsourcingTypeWPay('');
+          setAdditionalPayWill(0);
         }
       }else {
         if(window.confirm("確定要提交問卷了嗎？提交之後就沒辦法再修改了唷！")){
@@ -749,10 +749,10 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         setPlausibility={setPlausibility}
         crowdsourcingType={crowdsourcingType}
         setCrowdsourcingType={setCrowdsourcingType}
-        effort={effort}
-        setEffort={setEffort}
-        payment={payment}
-        setPayment={setPayment}
+        crowdsourcingTypeWPay={crowdsourcingTypeWPay}
+        setCrowdsourcingTypeWPay={setCrowdsourcingTypeWPay}
+        additionalPayWill={additionalPayWill}
+        setAdditionalPayWill={setAdditionalPayWill}
       />
       <button
         className="prev"

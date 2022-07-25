@@ -91,10 +91,10 @@ server.post('/pilotresult', (req, res) => {
     surveyResult = [];
     let count = Object.keys(result).length - 2;
     while(count >= 0){
-      surveyResult.push([result.Pilot, result[count].tag.Category, result[count].tag.Plausibility, result[count].tag.Importance, result[count].tag.Urgency, result[count].plausibilityScore, result[count].importanceScore, result[count].effortScore, result[count].urgencyScore, result[count].crowdsourcingType, result[count].payment]);
+      surveyResult.push([result.Pilot, result[count].tag.Category, result[count].tag.Expected, result[count].tag.Plausibility, result[count].tag.Urgency, result[count].urgencyScore, result[count].consistancyScore, result[count].userExpection, result[count].userPlausibility, result[count].crowdsourcingType, result[count].crowdsourcingTypeWUrgency, result[count].crowdsourcingTypeWPay]);
       count--;
     }
-    db.query(`insert into pilot_result (Pilot, Category, Plausibility, Importance, Urgency, PlausibilityScore, ImportanceScore, EffortScore, UrgencyScore, CrowdsourcingType, Payment) values ?`, [surveyResult], function(err, result) {
+    db.query(`insert into pilot_result (Pilot, Category, Expected, Plausibility, Urgency, urgencyScore, consistancyScore, userExpection, userPlausibility, crowdsourcingType, crowdsourcingTypeWUrgency, crowdsourcingTypeWPay) values ?`, [surveyResult], function(err, result) {
       if (err) throw err;
       console.log(`Result ${surveyResult} save correct`);
     });
@@ -118,10 +118,10 @@ server.post('/result', (req, res) => {
     surveyResult = [];
     let count = Object.keys(result).length - 2;
     while(count >= 0){
-      surveyResult.push([result.User, result[count].tag.Category, result[count].tag.Plausibility, result[count].tag.Importance, result[count].tag.Urgency, result[count].plausibilityScore, result[count].importanceScore, result[count].effortScore, result[count].urgencyScore, result[count].crowdsourcingType, result[count].payment]);
+      surveyResult.push([result.User, result[count].tag.Category, result[count].tag.Expected, result[count].tag.Plausibility, result[count].tag.Urgency, result[count].urgencyScore, result[count].consistancyScore, result[count].userExpection, result[count].userPlausibility, result[count].crowdsourcingType, result[count].crowdsourcingTypeWUrgency, result[count].crowdsourcingTypeWPay]);
       count--;
     }
-    db.query(`insert into result (User, Category, Plausibility, Importance, Urgency, PlausibilityScore, ImportanceScore, EffortScore, UrgencyScore, CrowdsourcingType, Payment) values ?`, [surveyResult], function(err, result) {
+    db.query(`insert into result (User, Category, Expected, Plausibility, Urgency, urgencyScore, consistancyScore, userExpection, userPlausibility, crowdsourcingType, crowdsourcingTypeWUrgency, crowdsourcingTypeWPay) values ?`, [surveyResult], function(err, result) {
       if (err) throw err;
       console.log(`Result ${surveyResult} save correct`);
     });

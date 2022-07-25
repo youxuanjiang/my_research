@@ -547,8 +547,8 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
   const [expection, setExpection] = useState('');
   const [plausibility, setPlausibility] = useState('');
   const [crowdsourcingType, setCrowdsourcingType] = useState('');
+  const [crowdsourcingTypeWUrgency, setCrowdsourcingTypeWUrgency] = useState('');
   const [crowdsourcingTypeWPay, setCrowdsourcingTypeWPay] = useState('');
-  const [additionalPayWill, setAdditionalPayWill] = useState(0);
 
   const fecthStatus = useRef(true);
 
@@ -582,6 +582,7 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
       result[scenarioArrCount] = {
         "tag":{
           "Category":questions[scenarioArrCount].Category,
+          "Expected":questions[scenarioArrCount].Expected,
           "Plausibility":questions[scenarioArrCount].Plausibility,
           "Urgency":questions[scenarioArrCount].Urgency
         },
@@ -590,8 +591,8 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         "userExpection":expection,
         "userPlausibility":plausibility,
         "crowdsourcingType":crowdsourcingType,
-        "crowdsourcingTypeWPay":crowdsourcingTypeWPay,
-        "additionalPayWill":additionalPayWill
+        "crowdsourcingTypeWUrgency":crowdsourcingTypeWUrgency,
+        "crowdsourcingTypeWPay":crowdsourcingTypeWPay
       };
 
       scenarioArrCount -= 1;
@@ -618,8 +619,8 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
       setExpection(result[scenarioArrCount].userExpection);
       setPlausibility(result[scenarioArrCount].userPlausibility);
       setCrowdsourcingType(result[scenarioArrCount].crowdsourcingType);
+      setCrowdsourcingTypeWUrgency(result[scenarioArrCount].crowdsourcingTypeWUrgency);
       setCrowdsourcingTypeWPay(result[scenarioArrCount].crowdsourcingTypeWPay);
-      setAdditionalPayWill(result[scenarioArrCount].additionalPayWill);
     }
   }
 
@@ -633,6 +634,7 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         result[scenarioArrCount] = {
           "tag":{
             "Category":questions[scenarioArrCount].Category,
+            "Expected":questions[scenarioArrCount].Expected,
             "Plausibility":questions[scenarioArrCount].Plausibility,
             "Urgency":questions[scenarioArrCount].Urgency
           },
@@ -641,13 +643,14 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
           "userExpection":expection,
           "userPlausibility":plausibility,
           "crowdsourcingType":crowdsourcingType,
-          "crowdsourcingTypeWPay":crowdsourcingTypeWPay,
-          "additionalPayWill":additionalPayWill
+          "crowdsourcingTypeWUrgency":crowdsourcingTypeWUrgency,
+          "crowdsourcingTypeWPay":crowdsourcingTypeWPay
         };
       }else{
         result.push({
           "tag":{
             "Category":questions[scenarioArrCount].Category,
+            "Expected":questions[scenarioArrCount].Expected,
             "Plausibility":questions[scenarioArrCount].Plausibility,
             "Urgency":questions[scenarioArrCount].Urgency
           },
@@ -656,8 +659,8 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
           "userExpection":expection,
           "userPlausibility":plausibility,
           "crowdsourcingType":crowdsourcingType,
-          "crowdsourcingTypeWPay":crowdsourcingTypeWPay,
-          "additionalPayWill":additionalPayWill
+          "crowdsourcingTypeWUrgency":crowdsourcingTypeWUrgency,
+          "crowdsourcingTypeWPay":crowdsourcingTypeWPay
         });
       }
       if (buttonValue === '下一題') {
@@ -697,8 +700,8 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
           setExpection(result[scenarioArrCount].userExpection);
           setPlausibility(result[scenarioArrCount].userPlausibility);
           setCrowdsourcingType(result[scenarioArrCount].crowdsourcingType);
+          setCrowdsourcingTypeWUrgency(result[scenarioArrCount].crowdsourcingTypeWUrgency);
           setCrowdsourcingTypeWPay(result[scenarioArrCount].crowdsourcingTypeWPay);
-          setAdditionalPayWill(result[scenarioArrCount].additionalPayWill);
         }
         else{
           setUrgency(0);
@@ -706,8 +709,8 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
           setExpection('');
           setPlausibility('');
           setCrowdsourcingType('');
+          setCrowdsourcingTypeWUrgency('');
           setCrowdsourcingTypeWPay('');
-          setAdditionalPayWill(0);
         }
       }else {
         if(window.confirm("確定要提交問卷了嗎？提交之後就沒辦法再修改了唷！")){
@@ -749,10 +752,10 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         setPlausibility={setPlausibility}
         crowdsourcingType={crowdsourcingType}
         setCrowdsourcingType={setCrowdsourcingType}
+        crowdsourcingTypeWUrgency={crowdsourcingTypeWUrgency}
+        setCrowdsourcingTypeWUrgency={setCrowdsourcingTypeWUrgency}
         crowdsourcingTypeWPay={crowdsourcingTypeWPay}
         setCrowdsourcingTypeWPay={setCrowdsourcingTypeWPay}
-        additionalPayWill={additionalPayWill}
-        setAdditionalPayWill={setAdditionalPayWill}
       />
       <button
         className="prev"

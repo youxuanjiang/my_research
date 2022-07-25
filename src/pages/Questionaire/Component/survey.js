@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 
-const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, expection, setExpection, plausibility, setPlausibility, crowdsourcingType, setCrowdsourcingType, crowdsourcingTypeWPay, setCrowdsourcingTypeWPay, additionalPayWill, setAdditionalPayWill}) => {
+const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, expection, setExpection, plausibility, setPlausibility, crowdsourcingType, setCrowdsourcingType, crowdsourcingTypeWUrgency, setCrowdsourcingTypeWUrgency, crowdsourcingTypeWPay, setCrowdsourcingTypeWPay}) => {
   let question3and4;
   if (category.trim().includes('健身房')) {
     question3and4 = [
@@ -276,47 +276,47 @@ const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, exp
   if (crowdsourcingType.trim() === 'VERIFICATION' || crowdsourcingType.trim() === 'COMPLEMENT') {
     question6 = [
       <div>
-        <p className="surveyQuestion"> 6. 若在考慮點數花費的情況下，您會想要得到怎樣的資訊呢？</p>
+        <p className="surveyQuestion"> 6. 考慮獲得資訊可能需要的等待時間以及情境的緊急程度，您會想要現場的人提供什麼樣的資訊呢？</p>
           <div>
             <input
               type="radio"
-              checked={crowdsourcingTypeWPay.trim() === 'VERIFICATION'}
-              onChange={() => setCrowdsourcingTypeWPay('VERIFICATION')}
-            />我想得到<span className="highLine">驗證</span>的資訊<br/>
+              checked={crowdsourcingTypeWUrgency.trim() === 'VERIFICATION'}
+              onChange={() => setCrowdsourcingTypeWUrgency('VERIFICATION')}
+            />我想要現場的人提供我<span className="highLine">驗證</span>的資訊<br/>
             <input
               type="radio"
-              checked={crowdsourcingTypeWPay.trim() === 'COMPLEMENT'}
-              onChange={() => setCrowdsourcingTypeWPay('COMPLEMENT')}
-            />我想得到<span className="highLine">補充</span>的資訊<br/>
+              checked={crowdsourcingTypeWUrgency.trim() === 'COMPLEMENT'}
+              onChange={() => setCrowdsourcingTypeWUrgency('COMPLEMENT')}
+            />我想要現場的人提供我<span className="highLine">補充</span>的資訊<br/>
             <input
               type="radio"
-              checked={crowdsourcingTypeWPay.trim() === 'NONE'}
-              onChange={() => setCrowdsourcingTypeWPay('NONE')}
+              checked={crowdsourcingTypeWUrgency.trim() === 'NONE'}
+              onChange={() => setCrowdsourcingTypeWUrgency('NONE')}
             />我不需要其他人的協助
           </div>
       </div>
     ];
   }
   else {
-    setCrowdsourcingTypeWPay('');
+    setCrowdsourcingTypeWUrgency('');
     question6 = [
       <div>
-        <p className="lock"> 6. 若在考慮點數花費的情況下，您會想要得到怎樣的資訊呢？</p>
+        <p className="lock"> 6. 考慮獲得資訊可能需要的等待時間以及情境的緊急程度，您會想要現場的人提供什麼樣的資訊呢？</p>
         <div className="lock">
           <input
             type="radio"
-            checked={crowdsourcingTypeWPay.trim() === 'VERIFICATION'}
-            onChange={() => setCrowdsourcingTypeWPay('VERIFICATION')}
-          />我想得到驗證的資訊<br/>
+            checked={crowdsourcingTypeWUrgency.trim() === 'VERIFICATION'}
+            onChange={() => setCrowdsourcingTypeWUrgency('')}
+          />我想要現場的人提供我驗證的資訊<br/>
           <input
             type="radio"
-            checked={crowdsourcingTypeWPay.trim() === 'COMPLEMENT'}
-            onChange={() => setCrowdsourcingTypeWPay('COMPLEMENT')}
-          />我想得到補充的資訊<br/>
+            checked={crowdsourcingTypeWUrgency.trim() === 'COMPLEMENT'}
+            onChange={() => setCrowdsourcingTypeWUrgency('')}
+          />我想要現場的人提供我補充的資訊<br/>
           <input
             type="radio"
-            checked={crowdsourcingTypeWPay.trim() === 'NONE'}
-            onChange={() => setCrowdsourcingTypeWPay('NONE')}
+            checked={crowdsourcingTypeWUrgency.trim() === 'NONE'}
+            onChange={() => setCrowdsourcingTypeWUrgency('')}
           />我不需要其他人的協助
         </div>
       </div>
@@ -324,99 +324,71 @@ const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, exp
   }
 
   let question7;
-  if (crowdsourcingTypeWPay.trim() === 'VERIFICATION' || crowdsourcingTypeWPay.trim() === 'COMPLEMENT') {
+  if (crowdsourcingTypeWUrgency.trim() === 'VERIFICATION' || crowdsourcingTypeWUrgency.trim() === 'COMPLEMENT') {
     question7 = [
       <div>
-        <p className="surveyQuestion"> 7. 您願意增加花費的點數，來縮短等待的時間嗎？</p>
+        <p className="surveyQuestion"> 7. 已知越需要付出心力的資訊，可能需要提供更多的點數來吸引人回答。您會如何花費點數取得資訊呢？</p>
           <div>
-            非常不願意
             <input
               type="radio"
-              checked={additionalPayWill === 1}
-              onChange={() => setAdditionalPayWill(1)}
-            />
+              checked={crowdsourcingTypeWPay === 'NOMAL_VERIFY'}
+              onChange={() => setCrowdsourcingTypeWPay('NOMAL_VERIFY')}
+            /> 提供我認為驗證所需的最低點數等待驗證<br/>
             <input
               type="radio"
-              checked={additionalPayWill === 2}
-              onChange={() => setAdditionalPayWill(2)}
-            />
+              checked={crowdsourcingTypeWPay === 'FAST_VERIFY'}
+              onChange={() => setCrowdsourcingTypeWPay('FAST_VERIFY')}
+            /> 多花費額外驗證的點數，希望能減少等待驗證的時間<br/>
             <input
               type="radio"
-              checked={additionalPayWill === 3}
-              onChange={() => setAdditionalPayWill(3)}
-            />
-
+              checked={crowdsourcingTypeWPay === 'NOMAL_COMPLEMENT'}
+              onChange={() => setCrowdsourcingTypeWPay('NOMAL_COMPLEMENT')}
+            /> 提供我認為補充所需的最低點數等待補充<br/>
             <input
               type="radio"
-              checked={additionalPayWill === 4}
-              onChange={() => setAdditionalPayWill(4)}
-            />
-
+              checked={crowdsourcingTypeWPay === 'FAST_COMPLEMENT'}
+              onChange={() => setCrowdsourcingTypeWPay('FAST_COMPLEMENT')}
+            /> 多花費額外補充的點數，希望能減少等待補充的時間<br/>
             <input
               type="radio"
-              checked={additionalPayWill === 5}
-              onChange={() => setAdditionalPayWill(5)}
-            />
-            <input
-              type="radio"
-              checked={additionalPayWill === 6}
-              onChange={() => setAdditionalPayWill(6)}
-            />
-            <input
-              type="radio"
-              checked={additionalPayWill === 7}
-              onChange={() => setAdditionalPayWill(7)}
-            />
-            非常急
+              checked={crowdsourcingTypeWPay === 'NONE'}
+              onChange={() => setCrowdsourcingTypeWPay('NONE')}
+            /> 我不願意花費點數
           </div>
       </div>
     ]
   }
   else {
-    setAdditionalPayWill(0);
+    setCrowdsourcingTypeWPay('');
     question7 = [
       <div>
-        <p className="lock"> 7. 您願意增加花費的點數，來縮短等待的時間嗎？</p>
+        <p className="lock"> 7. 已知越需要付出心力的資訊，可能需要提供更多的點數來吸引人回答。您會如何花費點數取得資訊呢？</p>
           <div className="lock">
-            非常不願意
             <input
               type="radio"
-              checked={additionalPayWill === 1}
-              onChange={() => setAdditionalPayWill(0)}
-            />
+              checked={crowdsourcingTypeWPay === 'NOMAL_VERIFY'}
+              onChange={() => setCrowdsourcingTypeWPay('')}
+            /> 提供我認為驗證所需的最低點數等待驗證<br/>
             <input
               type="radio"
-              checked={additionalPayWill === 2}
-              onChange={() => setAdditionalPayWill(0)}
-            />
+              checked={crowdsourcingTypeWPay === 'FAST_VERIFY'}
+              onChange={() => setCrowdsourcingTypeWPay('')}
+            /> 多花費額外驗證的點數，希望能減少等待驗證的時間<br/>
             <input
               type="radio"
-              checked={additionalPayWill === 3}
-              onChange={() => setAdditionalPayWill(0)}
-            />
-
+              checked={crowdsourcingTypeWPay === 'NOMAL_COMPLEMENT'}
+              onChange={() => setCrowdsourcingTypeWPay('')}
+            /> 提供我認為補充所需的最低點數等待補充<br/>
             <input
               type="radio"
-              checked={additionalPayWill === 4}
-              onChange={() => setAdditionalPayWill(0)}
-            />
-
+              checked={crowdsourcingTypeWPay === 'FAST_COMPLEMENT'}
+              onChange={() => setCrowdsourcingTypeWPay('')}
+            /> 多花費額外補充的點數，希望能減少等待補充的時間<br/>
             <input
               type="radio"
-              checked={additionalPayWill === 5}
-              onChange={() => setAdditionalPayWill(0)}
-            />
-            <input
-              type="radio"
-              checked={additionalPayWill === 6}
-              onChange={() => setAdditionalPayWill(0)}
-            />
-            <input
-              type="radio"
-              checked={additionalPayWill === 7}
-              onChange={() => setAdditionalPayWill(0)}
-            />
-            非常急
+              checked={crowdsourcingTypeWPay === 'NONE'}
+              onChange={() => setCrowdsourcingTypeWPay('')}
+            /> 我不願意花費點數
           </div>
       </div>
     ]
@@ -513,7 +485,7 @@ const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, exp
     </div>,
     ...question3and4,
     <div>
-      <p className="surveyQuestion"> 5. 假設您現在能透過app去請現場的人回答問題，在不考慮點數花費的情況下，您會想要得到怎樣的資訊呢？</p>
+      <p className="surveyQuestion"> 5. 假設您現在能透過app去請現場的人回答問題，在<span className="highLine">不考慮點數花費以及等待時間</span>的情況下，您本身會想要得到怎樣的資訊呢？</p>
       <div>
         <input
           type="radio"

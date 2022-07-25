@@ -8,13 +8,13 @@ const Scenario = ({ number, test, scenario, image }) => {
       <div className="mobile_scenario">
         <h1 className="mobile_title">範例 { number }：{test}</h1>
         <div className="mobile_scenarioContent">
+          <p>{ scenario.map((sentance) => {
+              return(<span key={v4()}>{sentance}<br/></span>)
+            }) }</p>
           <img
           src={image}
           style={{ width: "100%", margin: "30px 0" }}
           />
-          <p>{ scenario.map((sentance) => {
-              return(<span key={v4()}>{sentance}<br/></span>)
-            }) }</p>
         </div>
       </div>
     );
@@ -24,13 +24,13 @@ const Scenario = ({ number, test, scenario, image }) => {
       <div className="scenario">
         <h1 className="title">範例 { number }：{test}</h1>
         <div className="scenarioContent">
-          <img
-          src={image}
-          style={{ width: "100%", margin: "30px 0" }}
-          />
           <p>{ scenario.map((sentance) => {
               return(<span key={v4()}>{sentance}<br/></span>)
             }) }</p>
+          <img
+          src={image}
+          style={{ width: "70%", margin: "30px 0" }}
+          />
         </div>
       </div>
     );

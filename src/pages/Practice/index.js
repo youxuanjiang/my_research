@@ -10,13 +10,13 @@ const axios = require('axios');
 let questions = [{
   'Test':'熱門時段預期人會很多，但即時資訊卻都顯示沒什麼人',
   'Category':'撞球館',
-  'Question':'你今天打算去附近的撞球館打撞球，由於假日晚上是熱門時段，因此想先確定一下該撞球館的即時資訊，如果人太多的話就去稍微遠一點的另外一間（距離關係如圖一），即時資訊有提供即時人潮資訊（如圖二）以及球桌使用狀況（如圖三）。\r\n\r\n最晚一個半小時後要到達球館，不然打球時間會不夠，趕不上球館的休息時間。',
-  'ImageURL':'https://imgur.com/HW0gS6D.jpg'
+  'Question':'現在是假日晚上，你打算去附近的撞球館打撞球。\r\n\r\n由於假日晚上是熱門時段，因此想先確定一下該撞球館的即時資訊。\r\n\r\n即時資訊有提供「撞球館內即時人潮」（如圖一）以及「球桌即時使用狀況」（如圖二）。\r\n\r\n最晚兩個小時後到達球館，也還有充裕的時間可以再球館休息前打完球。',
+  'ImageURL':'https://imgur.com/VxaD8qV.jpg'
 },{
   'Test':'本身沒有預期且兩種即時資訊相互矛盾',
   'Category':'撞球館',
-  'Question':'你今天打算去附近的撞球館打撞球，由於假日晚上是熱門時段，因此想先確定一下該撞球館的即時資訊，如果人太多的話就去稍微遠一點的另外一間（距離關係如圖一），即時資訊有提供即時人潮資訊（如圖二）以及球桌使用狀況（如圖三）。\r\n\r\n最晚半小時後要到達球館，不然打球時間會不夠，趕不上球館的休息時間。',
-  'ImageURL':'https://imgur.com/4BV6UqY.jpg'
+  'Question':'現在是假日晚上，你打算去附近的撞球館打撞球。\r\n\r\n由於假日晚上是熱門時段，因此想先確定一下該撞球館的即時資訊。\r\n\r\n即時資訊有提供「撞球館內即時人潮」（如圖一）以及「球桌即時使用狀況」（如圖二）。\r\n\r\n最晚半小時後要到達球館，不然會沒有足夠的時間可以打球。',
+  'ImageURL':'https://imgur.com/EH1gKZR.jpg'
 }];
 const result = [];
 var scenarioArrCount = 0;
@@ -44,8 +44,8 @@ const Practice = ({setPages}) => {
   const [expection, setExpection] = useState('');
   const [plausibility, setPlausibility] = useState('');
   const [crowdsourcingType, setCrowdsourcingType] = useState('');
+  const [crowdsourcingTypeWUrgency, setCrowdsourcingTypeWUrgency] = useState('');
   const [crowdsourcingTypeWPay, setCrowdsourcingTypeWPay] = useState('');
-  const [additionalPayWill, setAdditionalPayWill] = useState(0);
 
   const fecthStatus = useRef(true);
   useEffect(() => {
@@ -86,8 +86,8 @@ const Practice = ({setPages}) => {
         "userExpection":expection,
         "userPlausibility":plausibility,
         "crowdsourcingType":crowdsourcingType,
-        "crowdsourcingTypeWPay":crowdsourcingTypeWPay,
-        "additionalPayWill":additionalPayWill
+        "crowdsourcingTypeWUrgency":crowdsourcingTypeWUrgency,
+        "crowdsourcingTypeWPay":crowdsourcingTypeWPay
       };
 
       scenarioArrCount -= 1;
@@ -101,8 +101,8 @@ const Practice = ({setPages}) => {
       setExpection(result[scenarioArrCount].userExpection);
       setPlausibility(result[scenarioArrCount].userPlausibility);
       setCrowdsourcingType(result[scenarioArrCount].crowdsourcingType);
+      setCrowdsourcingTypeWUrgency(result[scenarioArrCount].crowdsourcingTypeWUrgency);
       setCrowdsourcingTypeWPay(result[scenarioArrCount].crowdsourcingTypeWPay);
-      setAdditionalPayWill(result[scenarioArrCount].additionalPayWill);
     }
   }
 
@@ -124,8 +124,8 @@ const Practice = ({setPages}) => {
           "userExpection":expection,
           "userPlausibility":plausibility,
           "crowdsourcingType":crowdsourcingType,
-          "crowdsourcingTypeWPay":crowdsourcingTypeWPay,
-          "additionalPayWill":additionalPayWill
+          "crowdsourcingTypeWUrgency":crowdsourcingTypeWUrgency,
+          "crowdsourcingTypeWPay":crowdsourcingTypeWPay
         };
       }else{
         result.push({
@@ -139,8 +139,8 @@ const Practice = ({setPages}) => {
           "userExpection":expection,
           "userPlausibility":plausibility,
           "crowdsourcingType":crowdsourcingType,
-          "crowdsourcingTypeWPay":crowdsourcingTypeWPay,
-          "additionalPayWill":additionalPayWill
+          "crowdsourcingTypeWUrgency":crowdsourcingTypeWUrgency,
+          "crowdsourcingTypeWPay":crowdsourcingTypeWPay
         });
       }
       if (buttonValue === '下一題') {
@@ -169,8 +169,8 @@ const Practice = ({setPages}) => {
           setExpection(result[scenarioArrCount].userExpection);
           setPlausibility(result[scenarioArrCount].userPlausibility);
           setCrowdsourcingType(result[scenarioArrCount].crowdsourcingType);
+          setCrowdsourcingTypeWUrgency(result[scenarioArrCount].crowdsourcingTypeWUrgency);
           setCrowdsourcingTypeWPay(result[scenarioArrCount].crowdsourcingTypeWPay);
-          setAdditionalPayWill(result[scenarioArrCount].additionalPayWill);
         }
         else{
           setUrgency(0);
@@ -178,8 +178,8 @@ const Practice = ({setPages}) => {
           setExpection('');
           setPlausibility('');
           setCrowdsourcingType('');
+          setCrowdsourcingTypeWUrgency('');
           setCrowdsourcingTypeWPay('');
-          setAdditionalPayWill(0);
         }
       }else {
         setPages(3);
@@ -213,10 +213,10 @@ const Practice = ({setPages}) => {
         setPlausibility={setPlausibility}
         crowdsourcingType={crowdsourcingType}
         setCrowdsourcingType={setCrowdsourcingType}
+        crowdsourcingTypeWUrgency={crowdsourcingTypeWUrgency}
+        setCrowdsourcingTypeWUrgency={setCrowdsourcingTypeWUrgency}
         crowdsourcingTypeWPay={crowdsourcingTypeWPay}
         setCrowdsourcingTypeWPay={setCrowdsourcingTypeWPay}
-        additionalPayWill={additionalPayWill}
-        setAdditionalPayWill={setAdditionalPayWill}
       />
       <button
         className="prev"

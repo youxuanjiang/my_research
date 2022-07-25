@@ -9,13 +9,13 @@ const Scenario = ({ number, test, scenario, image }) => {
         <h1 className="mobile_title">情境 { number }（共20個情境）</h1>
         <div className="mobile_scenarioContent">
           <p>{test}</p>
-          <img
-          src={image}
-          style={{ width: "100%", margin: "30px 0" }}
-          />
-          <p>{ scenario.map((sentance) => {
-              return(<span key={v4()}>{sentance}<br/></span>)
-            }) }</p>
+            <p>{ scenario.map((sentance) => {
+                return(<span key={v4()}>{sentance}<br/></span>)
+              }) }</p>
+            <img
+            src={image}
+            style={{ width: "100%", margin: "30px 0" }}
+            />
         </div>
       </div>
     );
@@ -26,13 +26,13 @@ const Scenario = ({ number, test, scenario, image }) => {
         <h1 className="title">情境 { number }（共20個情境）</h1>
         <div className="scenarioContent">
           <p>{test}</p>
-          <img
-          src={image}
-          style={{ width: "100%", margin: "30px 0" }}
-          />
           <p>{ scenario.map((sentance) => {
               return(<span key={v4()}>{sentance}<br/></span>)
             }) }</p>
+          <img
+          src={image}
+          style={{ width: "80%", margin: "30px 0" }}
+          />
         </div>
       </div>
     );

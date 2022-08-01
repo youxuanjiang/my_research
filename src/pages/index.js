@@ -26,7 +26,7 @@ const Pages = () => {
       />
     );
   }
-  
+
   else if (pages === 2){
     window.scrollTo({ top: 0, behavior: 'smooth' });
     return (

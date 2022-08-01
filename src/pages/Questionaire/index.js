@@ -57,15 +57,14 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
   // 若沒辦法成功送出request看這篇：https://shubo.io/what-is-cors/
   try {
     const res = await axios.get(API_HOST + '/questionaire');
-    const crowd_occupancy_order = Math.floor( Math.random() * 5 ) + 1;
+    const question_order = Math.floor( Math.random() * 5 ) + 1;
     const question_crowd_occupancy = [];
-    const location_time_order = Math.floor( Math.random() * 5 ) + 1;
     const question_location_time = [];
     res.data.forEach((question) => {
       // 從資料庫篩選真正要用的題目
       if (question.Category.includes('房') || question.Category.includes('餐') || question.Category.includes('館') || question.Category.includes('停車')) {
         try {
-          if (crowd_occupancy_order === 1) {
+          if (question_order === 1) {
             if (question.Category.includes('健身房')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_crowd_occupancy.push(question);
@@ -107,7 +106,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
               }
             }
           }
-          if (crowd_occupancy_order === 2) {
+          if (question_order === 2) {
             if (question.Category.includes('圖書館')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_crowd_occupancy.push(question);
@@ -149,7 +148,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
               }
             }
           }
-          if (crowd_occupancy_order === 3) {
+          if (question_order === 3) {
             if (question.Category.includes('桌球館')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_crowd_occupancy.push(question);
@@ -191,7 +190,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
               }
             }
           }
-          if (crowd_occupancy_order === 4) {
+          if (question_order === 4) {
             if (question.Category.includes('餐廳')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_crowd_occupancy.push(question);
@@ -233,7 +232,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
               }
             }
           }
-          if (crowd_occupancy_order === 5) {
+          if (question_order === 5) {
             if (question.Category.includes('停車場')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_crowd_occupancy.push(question);
@@ -281,7 +280,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
       }
       else {
         try {
-          if (location_time_order === 1) {
+          if (question_order === 1) {
             if (question.Category.includes('火車')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_location_time.push(question);
@@ -323,7 +322,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
               }
             }
           }
-          if (location_time_order === 2) {
+          if (question_order === 2) {
             if (question.Category.includes('公車')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_location_time.push(question);
@@ -365,7 +364,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
               }
             }
           }
-          if (location_time_order === 3) {
+          if (question_order === 3) {
             if (question.Category.includes('客運')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_location_time.push(question);
@@ -407,7 +406,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
               }
             }
           }
-          if (location_time_order === 4) {
+          if (question_order === 4) {
             if (question.Category.includes('船')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_location_time.push(question);
@@ -449,7 +448,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
               }
             }
           }
-          if (location_time_order === 5) {
+          if (question_order === 5) {
             if (question.Category.includes('飛機')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_location_time.push(question);
@@ -496,11 +495,22 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
         }
       }
     });
-    for (let i = 0; i < question_crowd_occupancy.length; i++) {
-      questions.push(question_crowd_occupancy[i]);
-      questions.push(question_location_time[i])
+    for (let i = 0; i < question_crowd_occupancy.length/2; i++) {
+      if (i%2 === 0) {
+        questions.push(question_crowd_occupancy[i]);
+        questions.push(question_location_time[9-i]);
+        questions.push(question_location_time[i]);
+        questions.push(question_crowd_occupancy[9-i]);
+      }
+      else {
+        questions.push(question_crowd_occupancy[i]);
+        questions.push(question_location_time[i]);
+        questions.push(question_location_time[9-i]);
+        questions.push(question_crowd_occupancy[9-i]);
+      }
     }
-    questions = balancedLatinSquare(questions, Math.floor( Math.random() * 20 ));
+    const square_order = [4,9,18,19];
+    questions = balancedLatinSquare(questions, square_order[Math.floor( Math.random() * 4 )]);
   } catch (e) {
     console.log('error while get API: ' + e);
   }

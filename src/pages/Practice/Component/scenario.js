@@ -6,8 +6,8 @@ const Scenario = ({ number, test, scenario, image }) => {
   if (isMobile) {
     return (
       <div className="mobile_scenario">
-        <h1 className="mobile_title">範例 { number }：{test}</h1>
-        <div className="mobile_scenarioContent">
+        <h2 className="mobile_title">範例 { number }：{test}</h2>
+        <div className="mobile_scenarioContent_practice">
           <p>{ scenario.map((sentance) => {
               return(<span key={v4()}>{sentance}<br/></span>)
             }) }</p>

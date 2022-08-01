@@ -148,6 +148,96 @@
   font-family: "LiGothic", "FangSong", Arial, serif;
 }
 
+.videolink {
+  border-radius:10px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  transform: translateX(137%);
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  box-sizing: border-box;
+  width: 16.7%;
+  padding: 5px;
+  font-size: 20px;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
+.introductionlink {
+  border-radius:10px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  transform: translateX(153.7%);
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  box-sizing: border-box;
+  width: 16.7%;
+  padding: 5px;
+  font-size: 20px;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
+.examplelink {
+  border-radius:10px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  transform: translateX(170.4%);
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  box-sizing: border-box;
+  width: 16.7%;
+  padding: 5px;
+  font-size: 20px;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
+.mobile_videolink {
+  border-radius:10px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  transform: translateX(7%);
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  box-sizing: border-box;
+  width: 29.7%;
+  padding: 5px;
+  font-size: 13px;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
+.mobile_introductionlink {
+  border-radius:10px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  transform: translateX(17.7%);
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  box-sizing: border-box;
+  width: 29.7%;
+  padding: 5px;
+  font-size: 13px;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
+.mobile_examplelink {
+  border-radius:10px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  transform: translateX(28.4%);
+  background-color: #000;
+  color: #fff;
+  border: 0;
+  box-sizing: border-box;
+  width: 29.7%;
+  padding: 5px;
+  font-size: 13px;
+  font-family: "LiGothic", "FangSong", Arial, serif;
+}
+
 .slider-width {
   width: 75%;
 }

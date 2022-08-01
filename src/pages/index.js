@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Introduction from './Introduction';
 import ParticipantIllustrate from './ParticipantIllustrate';
+import Video from './Video'
 import Background from './Background'
 import Practice from './Practice'
 import Questionaire from './Questionaire';
@@ -25,7 +26,17 @@ const Pages = () => {
       />
     );
   }
+  
   else if (pages === 2){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return (
+      <Video
+        setPages={setPages}
+      />
+    );
+  }
+
+  else if (pages === 3){
     window.scrollTo({ top: 0, behavior: 'smooth' });
     return (
       <Practice
@@ -33,7 +44,8 @@ const Pages = () => {
       />
     );
   }
-  else if (pages === 3){
+
+  else if (pages === 4){
     window.scrollTo({ top: 0, behavior: 'smooth' });
     return (
       <Questionaire
@@ -44,7 +56,7 @@ const Pages = () => {
     );
   }
 
-  else if (pages === 4) {
+  else if (pages === 5) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     return (
       <BasicInfo
@@ -54,7 +66,7 @@ const Pages = () => {
     );
   }
 
-  else if (pages === 5){
+  else if (pages === 6){
     window.scrollTo({ top: 0, behavior: 'smooth' });
     return (
       <ThankPage

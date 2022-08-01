@@ -127,7 +127,7 @@ const ParticipantIllustrate = ({ setPages }) => {
         <button
           className="mobile_start"
           onClick={clickButton}
-        >開始填寫問卷</button>
+        >實驗問卷填寫說明</button>
       </div>
     );
   }
@@ -242,7 +242,7 @@ const ParticipantIllustrate = ({ setPages }) => {
         <button
           className="start"
           onClick={clickButton}
-        >開始填寫問卷</button>
+        >實驗問卷填寫說明</button>
       </div>
     );
   }

@@ -10,12 +10,12 @@ const axios = require('axios');
 let questions = [{
   'Test':'熱門時段預期人會很多，但即時資訊卻都顯示沒什麼人',
   'Category':'撞球館',
-  'Question':'現在是假日晚上，你打算去附近的撞球館打撞球。\r\n\r\n由於假日晚上是熱門時段，因此想先確定一下該撞球館的即時資訊。\r\n\r\n即時資訊有提供「撞球館內即時人潮」（如圖一）以及「球桌即時使用狀況」（如圖二）。\r\n\r\n最晚兩個小時後到達球館，也還有充裕的時間可以再球館休息前打完球。',
-  'ImageURL':'https://imgur.com/VxaD8qV.jpg'
+  'Question':'設想現在是假日晚上，你打算去附近的撞球館打撞球。\r\n\r\n由於假日晚上是熱門時段，你預期現在人應該會很多，因此想先確定一下該撞球館的即時資訊。\r\n\r\n即時資訊有提供「撞球館內即時人潮」（如圖一）以及「球桌即時使用狀況」（如圖二）。\r\n\r\n最晚兩個小時後到達球館，也還有充裕的時間可以再球館休息前打完球。',
+  'ImageURL':'https://imgur.com/zfwvWyr.jpg'
 },{
   'Test':'本身沒有預期且兩種即時資訊相互矛盾',
   'Category':'撞球館',
-  'Question':'現在是假日晚上，你打算去附近的撞球館打撞球。\r\n\r\n由於假日晚上是熱門時段，因此想先確定一下該撞球館的即時資訊。\r\n\r\n即時資訊有提供「撞球館內即時人潮」（如圖一）以及「球桌即時使用狀況」（如圖二）。\r\n\r\n最晚半小時後要到達球館，不然會沒有足夠的時間可以打球。',
+  'Question':'設想你最近剛搬到新的城市，打算去附近的撞球館打撞球。\r\n\r\n由於不確定現在人多不多，因此出門前想先確定一下該撞球館的即時資訊。\r\n\r\n即時資訊有提供「撞球館內即時人潮」（如圖一）以及「球桌即時使用狀況」（如圖二）。\r\n\r\n最晚半小時後要到達球館，不然會沒有足夠的時間可以打球。',
   'ImageURL':'https://imgur.com/EH1gKZR.jpg'
 }];
 const result = [];
@@ -58,6 +58,50 @@ const Practice = ({setPages}) => {
     // if(!fecthStatus.current) return;
     setScenarioEntered(true);
   }, scenario);
+
+  const isMobile = window.innerWidth <= 500;
+  let links;
+
+  if (!isMobile) {
+    links = [
+      <a href="https://www.youtube.com/watch?v=97oWUYic3DY" target="_blank" rel="noreferrer">
+        <button
+          className="videolink"
+        >實驗說明影片</button>
+      </a>,
+      <a href="https://drive.google.com/file/d/10DqAU2s2Zj0fQ77x9ZMJknUYYeuqoIlb/view?usp=sharing" target="_blank" rel="noreferrer">
+        <button
+          className="introductionlink"
+        >參與者說明書</button>
+      </a>,
+      <a href="https://drive.google.com/file/d/1k6_s6C9dNCq6UtsyaCCQFXhjAjyDwWfp/view?usp=sharing" target="_blank" rel="noreferrer">
+        <button
+          className="examplelink"
+        >驗證補充簡易範例</button>
+      </a>
+    ];
+  }
+
+  else {
+    links = [
+      <a href="https://www.youtube.com/watch?v=97oWUYic3DY" target="_blank" rel="noreferrer">
+        <button
+          className="mobile_videolink"
+        >實驗說明影片</button>
+      </a>,
+      <a href="https://drive.google.com/file/d/10DqAU2s2Zj0fQ77x9ZMJknUYYeuqoIlb/view?usp=sharing" target="_blank" rel="noreferrer">
+        <button
+          className="mobile_introductionlink"
+        >參與者說明書</button>
+      </a>,
+      <a href="https://drive.google.com/file/d/1k6_s6C9dNCq6UtsyaCCQFXhjAjyDwWfp/view?usp=sharing" target="_blank" rel="noreferrer">
+        <button
+          className="mobile_examplelink"
+        >驗證補充簡易範例</button>
+      </a>
+    ];
+  }
+
 
   async function clickPrevButton() {
     if (scenarioArrCount === 0) {
@@ -182,12 +226,17 @@ const Practice = ({setPages}) => {
           setCrowdsourcingTypeWPay('');
         }
       }else {
-        setPages(3);
+        setPages(4);
       }
     }
   // }
   return (
     <div>
+      {
+        links.map((link) => {
+            return(<span>{link}</span>)
+        })
+      }
       <CSSTransition
         in={scenarioEntered}
         classNames="scenarioEntered"

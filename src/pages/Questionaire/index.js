@@ -550,6 +550,49 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
   const [crowdsourcingTypeWUrgency, setCrowdsourcingTypeWUrgency] = useState('');
   const [crowdsourcingTypeWPay, setCrowdsourcingTypeWPay] = useState('');
 
+  const isMobile = window.innerWidth <= 500;
+  let links;
+
+  if (!isMobile) {
+    links = [
+      <a href="https://www.youtube.com/watch?v=97oWUYic3DY" target="_blank" rel="noreferrer">
+        <button
+          className="videolink"
+        >實驗說明影片</button>
+      </a>,
+      <a href="https://drive.google.com/file/d/10DqAU2s2Zj0fQ77x9ZMJknUYYeuqoIlb/view?usp=sharing" target="_blank" rel="noreferrer">
+        <button
+          className="introductionlink"
+        >參與者說明書</button>
+      </a>,
+      <a href="https://drive.google.com/file/d/1k6_s6C9dNCq6UtsyaCCQFXhjAjyDwWfp/view?usp=sharing" target="_blank" rel="noreferrer">
+        <button
+          className="examplelink"
+        >驗證補充簡易範例</button>
+      </a>
+    ];
+  }
+
+  else {
+    links = [
+      <a href="https://www.youtube.com/watch?v=97oWUYic3DY" target="_blank" rel="noreferrer">
+        <button
+          className="mobile_videolink"
+        >實驗說明影片</button>
+      </a>,
+      <a href="https://drive.google.com/file/d/10DqAU2s2Zj0fQ77x9ZMJknUYYeuqoIlb/view?usp=sharing" target="_blank" rel="noreferrer">
+        <button
+          className="mobile_introductionlink"
+        >參與者說明書</button>
+      </a>,
+      <a href="https://drive.google.com/file/d/1k6_s6C9dNCq6UtsyaCCQFXhjAjyDwWfp/view?usp=sharing" target="_blank" rel="noreferrer">
+        <button
+          className="mobile_examplelink"
+        >驗證補充簡易範例</button>
+      </a>
+    ];
+  }
+
   const fecthStatus = useRef(true);
 
   // 第一次渲染畫面的時候，只會執行一次
@@ -720,13 +763,18 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
           setBasicInfo({
             "pilot":pilot
           });
-          setPages(5);
+          setPages(6);
         }
       }
     }
   // }
   return (
     <div>
+      {
+        links.map((link) => {
+            return(<span>{link}</span>)
+        })
+      }
       <CSSTransition
         in={scenarioEntered}
         classNames="scenarioEntered"

@@ -2,19 +2,21 @@ import { useState } from "react";
 import Introduction from './Introduction';
 import ParticipantIllustrate from './ParticipantIllustrate';
 import Video from './Video'
-import Background from './Background'
 import Practice from './Practice'
 import Questionaire from './Questionaire';
-import BasicInfo from './BasicInfo';
+import QuestionIndex from './QuestionIndex'
 import ThankPage from './ThankPage';
 const Pages = () => {
   const [pages, setPages] = useState(0);
   const [surveyResult, setSurveyResult] = useState([]);
-  const [basicInfo, setBasicInfo] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [userCode, setUserCode] = useState([]);
   if (pages === 0){
     return (
       <Introduction
         setPages={setPages}
+        userCode={userCode}
+        setUserCode={setUserCode}
       />
     )
   }
@@ -51,17 +53,20 @@ const Pages = () => {
       <Questionaire
         setPages={setPages}
         setSurveyResult={setSurveyResult}
-        setBasicInfo={setBasicInfo}
+        setQuestions={setQuestions}
       />
     );
   }
 
-  else if (pages === 5) {
+  else if (pages === 5){
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    console.log(questions);
     return (
-      <BasicInfo
+      <QuestionIndex
         setPages={setPages}
-        setBasicInfo={setBasicInfo}
+        surveyResult={surveyResult}
+        setSurveyResult={setSurveyResult}
+        questions={questions}
       />
     );
   }
@@ -71,7 +76,7 @@ const Pages = () => {
     return (
       <ThankPage
         surveyResult={surveyResult}
-        basicInfo={basicInfo}
+        userCode={userCode}
       />
     );
   }

@@ -27,7 +27,7 @@ function handleDisconnect() {
                                           // If you're also serving http, display a 503 error.
   db.on('error', function(err) {
     console.log('db error', err);
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
+    if(err.code === 'PROTOCOL_PACKETS_OUT_OF_ORDER') { // Connection to the MySQL server is usually
       handleDisconnect();                         // lost due to either server restart, or a
     } else {                                      // connnection idle timeout (the wait_timeout
       throw err;                                  // server variable configures this)
@@ -60,82 +60,55 @@ server.get('/questionaire', (req, res) => {
   });
 });
 
-server.get('/userinfo', (req, res) => {
-  console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
-  console.log(`Status Code: ${res.statusCode}\n-----\n`);
-  db.query('select * from user_table', function(err, rows) {
-    if (err) throw err;
-    res.writeHead(200);
-    res.end(JSON.stringify(rows));
-  });
-});
+// server.get('/userinfo', (req, res) => {
+//   console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
+//   console.log(`Status Code: ${res.statusCode}\n-----\n`);
+//   db.query('select * from user_table', function(err, rows) {
+//     if (err) throw err;
+//     res.writeHead(200);
+//     res.end(JSON.stringify(rows));
+//   });
+// });
+//
+// server.post('/userinfo', (req, res) => {
+//   console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
+//   console.log(`Status Code: ${res.statusCode}\n-----`);
+//
+//   let userinfo;
+//   req.on('data', function (chunk) {
+//     userinfo = JSON.parse('' + chunk);
+//     console.log(`Data chunk available: ${chunk}`);
+//     db.query(`insert into user_table (User, Sex, Age, Carrier, Education) values ('${userinfo.user}', '${userinfo.sex}', '${userinfo.age}', '${userinfo.carrier}', '${userinfo.education}')`, function(err, result) {
+//       if (err) throw err;
+//       console.log(`Userinfo ${JSON.stringify(userinfo)} save correct`);
+//     });
+//   });
+// });
 
-server.post('/userinfo', (req, res) => {
-  console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
-  console.log(`Status Code: ${res.statusCode}\n-----`);
+// server.get('/pilotinfo', (req, res) => {
+//   console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
+//   console.log(`Status Code: ${res.statusCode}\n-----\n`);
+//   db.query('select * from pilot_table', function(err, rows) {
+//     if (err) throw err;
+//     res.writeHead(200);
+//     res.end(JSON.stringify(rows));
+//   });
+// });
 
-  let userinfo;
-  req.on('data', function (chunk) {
-    userinfo = JSON.parse('' + chunk);
-    console.log(`Data chunk available: ${chunk}`);
-    db.query(`insert into user_table (User, Sex, Age, Carrier, Education) values ('${userinfo.user}', '${userinfo.sex}', '${userinfo.age}', '${userinfo.carrier}', '${userinfo.education}')`, function(err, result) {
-      if (err) throw err;
-      console.log(`Userinfo ${JSON.stringify(userinfo)} save correct`);
-    });
-  });
-});
-
-server.get('/pilotinfo', (req, res) => {
-  console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
-  console.log(`Status Code: ${res.statusCode}\n-----\n`);
-  db.query('select * from pilot_table', function(err, rows) {
-    if (err) throw err;
-    res.writeHead(200);
-    res.end(JSON.stringify(rows));
-  });
-});
-
-server.post('/pilotinfo', (req, res) => {
-  console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
-  console.log(`Status Code: ${res.statusCode}\n-----`);
-
-  let userinfo;
-  req.on('data', function (chunk) {
-    pilotinfo = JSON.parse('' + chunk);
-    console.log(`Data chunk available: ${chunk}`);
-    db.query(`insert into pilot_table (Pilot) values ('${pilotinfo.pilot}')`, function(err, result) {
-      if (err) throw err;
-      console.log(`Pilotinfo ${JSON.stringify(pilotinfo)} save correct`);
-    });
-  });
-});
-
-server.post('/pilotresult', (req, res) => {
-  console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
-  console.log(`Status Code: ${res.statusCode}\n-----`);
-
-  let result;
-  req.on('data', function (chunk) {
-    result = JSON.parse('' + chunk);
-    surveyResult = [];
-    let count = Object.keys(result).length - 2;
-    while(count >= 0){
-      surveyResult.push([result.Pilot, result[count].tag.Category, result[count].tag.Expected, result[count].tag.Plausibility, result[count].tag.Urgency, result[count].urgencyScore, result[count].consistancyScore, result[count].userExpection, result[count].userPlausibility, result[count].crowdsourcingType, result[count].crowdsourcingTypeWUrgency, result[count].crowdsourcingTypeWPay]);
-      count--;
-    }
-    db.query(`insert into pilot_result (Pilot, Category, Expected, Plausibility, Urgency, urgencyScore, consistancyScore, userExpection, userPlausibility, crowdsourcingType, crowdsourcingTypeWUrgency, crowdsourcingTypeWPay) values ?`, [surveyResult], function(err, result) {
-      if (err) throw err;
-      console.log(`Result ${surveyResult} save correct`);
-    });
-    console.log(`Data chunk available: ${chunk}`);
-  });
-  req.on('end', () => {
-      console.log(result);
-      console.log('-----\n');
-      res.writeHead(200);
-      res.end();
-  });
-});
+// server.post('/pilotinfo', (req, res) => {
+//   console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
+//   console.log(`Status Code: ${res.statusCode}\n-----`);
+//
+//   let userinfo;
+//   req.on('data', function (chunk) {
+//     pilotinfo = JSON.parse('' + chunk);
+//     console.log(`Data chunk available: ${chunk}`);
+//     db.query(`insert into pilot_table (Pilot) values ('${pilotinfo.pilot}')`, function(err, result) {
+//       if (err) throw err;
+//       console.log(`Pilotinfo ${JSON.stringify(pilotinfo)} save correct`);
+//     });
+//   });
+// });
 
 server.post('/result', (req, res) => {
   console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
@@ -147,10 +120,10 @@ server.post('/result', (req, res) => {
     surveyResult = [];
     let count = Object.keys(result).length - 2;
     while(count >= 0){
-      surveyResult.push([result.User, result[count].tag.Category, result[count].tag.Expected, result[count].tag.Plausibility, result[count].tag.Urgency, result[count].urgencyScore, result[count].consistancyScore, result[count].userExpection, result[count].userPlausibility, result[count].crowdsourcingType, result[count].crowdsourcingTypeWUrgency, result[count].crowdsourcingTypeWPay]);
+      surveyResult.push([result.UserCode, result[count].tag.Category, result[count].tag.Expected, result[count].tag.Plausibility, result[count].tag.Urgency, result[count].urgencyScore, result[count].consistancyScore, result[count].userExpection, result[count].userPlausibility, result[count].crowdsourcingType, result[count].crowdsourcingTypeWUrgency, result[count].crowdsourcingTypeWPay]);
       count--;
     }
-    db.query(`insert into result (User, Category, Expected, Plausibility, Urgency, urgencyScore, consistancyScore, userExpection, userPlausibility, crowdsourcingType, crowdsourcingTypeWUrgency, crowdsourcingTypeWPay) values ?`, [surveyResult], function(err, result) {
+    db.query(`insert into result (UserCode, Category, Expected, Plausibility, Urgency, urgencyScore, consistancyScore, userExpection, userPlausibility, crowdsourcingType, crowdsourcingTypeWUrgency, crowdsourcingTypeWPay) values ?`, [surveyResult], function(err, result) {
       if (err) throw err;
       console.log(`Result ${surveyResult} save correct`);
     });
@@ -163,6 +136,33 @@ server.post('/result', (req, res) => {
       res.end();
   });
 });
+
+// server.post('/result', (req, res) => {
+//   console.log(`-----\nRequest Type: ${req.method}\nRequest URI: ${req.url}`);
+//   console.log(`Status Code: ${res.statusCode}\n-----`);
+//
+//   let result;
+//   req.on('data', function (chunk) {
+//     result = JSON.parse('' + chunk);
+//     surveyResult = [];
+//     let count = Object.keys(result).length - 2;
+//     while(count >= 0){
+//       surveyResult.push([result.User, result[count].tag.Category, result[count].tag.Expected, result[count].tag.Plausibility, result[count].tag.Urgency, result[count].urgencyScore, result[count].consistancyScore, result[count].userExpection, result[count].userPlausibility, result[count].crowdsourcingType, result[count].crowdsourcingTypeWUrgency, result[count].crowdsourcingTypeWPay]);
+//       count--;
+//     }
+//     db.query(`insert into result (User, Category, Expected, Plausibility, Urgency, urgencyScore, consistancyScore, userExpection, userPlausibility, crowdsourcingType, crowdsourcingTypeWUrgency, crowdsourcingTypeWPay) values ?`, [surveyResult], function(err, result) {
+//       if (err) throw err;
+//       console.log(`Result ${surveyResult} save correct`);
+//     });
+//     console.log(`Data chunk available: ${chunk}`);
+//   });
+//   req.on('end', () => {
+//       console.log(result);
+//       console.log('-----\n');
+//       res.writeHead(200);
+//       res.end();
+//   });
+// });
 
 server.listen(port, () => {
   console.log(`Succeed running on port ${port} !`);

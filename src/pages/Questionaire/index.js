@@ -13,16 +13,16 @@ var scenarioArrCount = 0;
 // import "./index.css";
 
 
-async function createPilotCode() {
-  try {
-    const res = await axios.get(API_HOST + '/pilotinfo');
-    const userNum = res.data.length + 1;
-    return 'Pilot_' + userNum;
-  } catch (e) {
-    console.log(e);
-    return 'error create pilot code';
-  }
-}
+// async function createPilotCode() {
+//   try {
+//     const res = await axios.get(API_HOST + '/pilotinfo');
+//     const userNum = res.data.length + 1;
+//     return 'Pilot_' + userNum;
+//   } catch (e) {
+//     console.log(e);
+//     return 'error create pilot code';
+//   }
+// }
 
 // How to use:
 // var conditions = ["A", "B", "C", "D"];
@@ -52,7 +52,7 @@ function balancedLatinSquare(array, participantId) {
 	return result;
 }
 
-async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthStatus) {
+async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthStatus, setQuestions) {
   fecthStatus.current = false;
   // 若沒辦法成功送出request看這篇：https://shubo.io/what-is-cors/
   try {
@@ -313,7 +313,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
                 question_location_time.push(question);
               }
             }
-            if (question.Category.includes('飛機')) {
+            if (question.Category.includes('高鐵')) {
               if (question.Expected === 1 && question.Plausibility === 'AA' && question.Urgency === 'HIGH') {
                 question_location_time.push(question);
               }
@@ -347,7 +347,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
                 question_location_time.push(question);
               }
             }
-            if (question.Category.includes('飛機')) {
+            if (question.Category.includes('高鐵')) {
               if (question.Expected === 1 && question.Plausibility === 'BB' && question.Urgency === 'LOW') {
                 question_location_time.push(question);
               }
@@ -381,7 +381,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
                 question_location_time.push(question);
               }
             }
-            if (question.Category.includes('飛機')) {
+            if (question.Category.includes('高鐵')) {
               if (question.Expected === 1 && question.Plausibility === 'BB' && question.Urgency === 'HIGH') {
                 question_location_time.push(question);
               }
@@ -415,7 +415,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
                 question_location_time.push(question);
               }
             }
-            if (question.Category.includes('飛機')) {
+            if (question.Category.includes('高鐵')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'LOW') {
                 question_location_time.push(question);
               }
@@ -449,7 +449,7 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
             }
           }
           if (question_order === 5) {
-            if (question.Category.includes('飛機')) {
+            if (question.Category.includes('高鐵')) {
               if (question.Expected === 1 && question.Plausibility === 'AB' && question.Urgency === 'HIGH') {
                 question_location_time.push(question);
               }
@@ -514,22 +514,23 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
   } catch (e) {
     console.log('error while get API: ' + e);
   }
-  let _expected, _plausibility;
-  if (questions[scenarioArrCount].Expected === 1) {
-    _expected = '有預期Ａ';
-    _plausibility = questions[scenarioArrCount].Plausibility;
+  let _urgency, _expected, _plausibility = questions[scenarioArrCount].Plausibility;
+  if (questions[scenarioArrCount].Urgency == 'HIGH') {
+    _urgency = 'H';
   }else {
-    _expected = '沒預期'
-    if (questions[scenarioArrCount].Plausibility === 'AA') {
-      _plausibility = '一致'
-    }else {
-      _plausibility = '不一致'
-    }
+    _urgency = 'L';
   }
-  setTest(_expected + '，結果' + _plausibility + '，緊急程度' + questions[scenarioArrCount].Urgency);
+  if (questions[scenarioArrCount].Expected === 1) {
+    _expected = 'Y';
+  }else {
+    _expected = 'N';
+  }
+
+  setTest(_urgency + _expected + _plausibility);
   setCategory(questions[scenarioArrCount].Category);
   setScenario(questions[scenarioArrCount].Question.split('\r\n'));
   setImageUrl(questions[scenarioArrCount].ImageURL);
+  setQuestions(questions);
 }
 
 function delay(n){
@@ -538,7 +539,7 @@ function delay(n){
     });
 }
 
-const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
+const Questionaire = ({setPages, setSurveyResult, setQuestions}) => {
 
   // 重新整理、上一頁下一頁、離開時再次詢問。
   useBeforeunload(() => {
@@ -608,7 +609,7 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
   // 第一次渲染畫面的時候，只會執行一次
   useEffect(() => {
     if(!fecthStatus.current) return;
-    fetchData(setCategory, setScenario, setTest, setImageUrl, fecthStatus);
+    fetchData(setCategory, setScenario, setTest, setImageUrl, fecthStatus, setQuestions);
   }, []);
 
   useEffect(() => {
@@ -649,20 +650,19 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
       };
 
       scenarioArrCount -= 1;
-      let _expected, _plausibility;
-      if (questions[scenarioArrCount].Expected === 1) {
-        _expected = '有預期Ａ';
-        _plausibility = questions[scenarioArrCount].Plausibility;
+      let _urgency, _expected, _plausibility = questions[scenarioArrCount].Plausibility;
+      if (questions[scenarioArrCount].Urgency == 'HIGH') {
+        _urgency = 'H';
       }else {
-        _expected = '沒預期'
-        if (questions[scenarioArrCount].Plausibility === 'AA') {
-          _plausibility = '一致'
-        }else {
-          _plausibility = '不一致'
-        }
+        _urgency = 'L';
+      }
+      if (questions[scenarioArrCount].Expected === 1) {
+        _expected = 'Y';
+      }else {
+        _expected = 'N';
       }
 
-      setTest(_expected + '，結果' + _plausibility + '，緊急程度' + questions[scenarioArrCount].Urgency);
+      setTest(_urgency + _expected + _plausibility);
       setImageUrl(questions[scenarioArrCount].ImageURL);
       setScenario(questions[scenarioArrCount].Question.split('\r\n'));
       setCategory(questions[scenarioArrCount].Category);
@@ -727,24 +727,24 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
         });
 
         if (questions.length === scenarioArrCount+1){
-          setButtonValue('填寫基本資料')
+          setButtonValue('填寫完畢')
         }
         // console.log(scenarioArrCount);
         // console.log(questions[scenarioArrCount].Question.split('\n'));
         setImageUrl(questions[scenarioArrCount].ImageURL);
-        let _expected, _plausibility;
-        if (questions[scenarioArrCount].Expected === 1) {
-          _expected = '有預期Ａ';
-          _plausibility = questions[scenarioArrCount].Plausibility;
+        let _urgency, _expected, _plausibility = questions[scenarioArrCount].Plausibility;
+        if (questions[scenarioArrCount].Urgency == 'HIGH') {
+          _urgency = 'H';
         }else {
-          _expected = '沒預期'
-          if (questions[scenarioArrCount].Plausibility === 'AA') {
-            _plausibility = '一致'
-          }else {
-            _plausibility = '不一致'
-          }
+          _urgency = 'L';
         }
-        setTest(_expected + '，結果' + _plausibility + '，緊急程度' + questions[scenarioArrCount].Urgency);
+        if (questions[scenarioArrCount].Expected === 1) {
+          _expected = 'Y';
+        }else {
+          _expected = 'N';
+        }
+
+        setTest(_urgency + _expected + _plausibility);
         setScenario(questions[scenarioArrCount].Question.split('\r\n'));
         setCategory(questions[scenarioArrCount].Category);
         if (scenarioArrCount < result.length) {
@@ -766,15 +766,9 @@ const Questionaire = ({setPages, setSurveyResult, setBasicInfo}) => {
           setCrowdsourcingTypeWPay('');
         }
       }else {
-        if(window.confirm("確定要提交問卷了嗎？提交之後就沒辦法再修改了唷！")){
-          const pilot = await createPilotCode();
-          console.log(result);
-          setSurveyResult(result);
-          setBasicInfo({
-            "pilot":pilot
-          });
-          setPages(6);
-        }
+				console.log(result);
+				setSurveyResult(result);
+				setPages(5);
       }
     }
   // }

@@ -41,6 +41,7 @@ const QuestionIndex = ({setPages, surveyResult, setSurveyResult, questions}) => 
   }, scenario);
 
   async function clickButton(count) {
+    console.log('count: ' , count);
 		if (count === -1) {
 			return;
 		}
@@ -49,7 +50,7 @@ const QuestionIndex = ({setPages, surveyResult, setSurveyResult, questions}) => 
     await delay(0.4);
 
     setImageUrl(questions[count].ImageURL);
-    let _urgency, _expected, _plausibility = questions[scenarioArrCount].Plausibility;
+    let _urgency, _expected, _plausibility = questions[count].Plausibility;
     if (questions[count].Urgency === 'HIGH') {
       _urgency = 'H';
     }else {
@@ -75,163 +76,101 @@ const QuestionIndex = ({setPages, surveyResult, setSurveyResult, questions}) => 
     }
   }
   // }
-	if (scenarioArrCount >= 0) {
-		return (
-	    <div>
-				<div className="index">
-					請選擇頁面
-		      <select  onChange={(e)=>{
-							if(scenarioArrCount!==-1) {
-								setSurveyResult((prev)=>{
-									prev[scenarioArrCount]={
-										"tag":{
-											"Category":questions[scenarioArrCount].Category,
-											"Expected":questions[scenarioArrCount].Expected,
-											"Plausibility":questions[scenarioArrCount].Plausibility,
-											"Urgency":questions[scenarioArrCount].Urgency
-										},
-										"urgencyScore":urgency,
-										"consistancyScore":consistancy,
-										"userExpection":expection,
-										"userPlausibility":plausibility,
-										"crowdsourcingType":crowdsourcingType,
-										"crowdsourcingTypeWUrgency":crowdsourcingTypeWUrgency,
-										"crowdsourcingTypeWPay":crowdsourcingTypeWPay
-									};
-									return prev;
-								});
-							}
-							setScenarioArrCount(Number(e.target.value)-1);
-							clickButton(Number(e.target.value)-1);
+  return (
+    <div>
+			<div className="index">
+				請選擇頁面
+	      <select  onChange={(e)=>{
+						if(scenarioArrCount!==-1) {
+              console.log(scenarioArrCount);
+							setSurveyResult((prev)=>{
+								prev[scenarioArrCount]={
+									"tag":{
+										"Category":questions[scenarioArrCount].Category,
+										"Expected":questions[scenarioArrCount].Expected,
+										"Plausibility":questions[scenarioArrCount].Plausibility,
+										"Urgency":questions[scenarioArrCount].Urgency
+									},
+									"urgencyScore":urgency,
+									"consistancyScore":consistancy,
+									"userExpection":expection,
+									"userPlausibility":plausibility,
+									"crowdsourcingType":crowdsourcingType,
+									"crowdsourcingTypeWUrgency":crowdsourcingTypeWUrgency,
+									"crowdsourcingTypeWPay":crowdsourcingTypeWPay
+								};
+								return prev;
+							});
 						}
-					}>
-		        <option value='0'>請選擇</option>
-		        <option value='1'>1</option>
-						<option value='2'>2</option>
-						<option value='3'>3</option>
-						<option value='4'>4</option>
-						<option value='5'>5</option>
-						<option value='6'>6</option>
-						<option value='7'>7</option>
-						<option value='8'>8</option>
-						<option value='9'>9</option>
-						<option value='10'>10</option>
-						<option value='11'>11</option>
-						<option value='12'>12</option>
-						<option value='13'>13</option>
-						<option value='14'>14</option>
-						<option value='15'>15</option>
-						<option value='16'>16</option>
-						<option value='17'>17</option>
-						<option value='18'>18</option>
-						<option value='19'>19</option>
-						<option value='20'>20</option>
-		      </select>
-				</div>
-	      <CSSTransition
-	        in={scenarioEntered}
-	        classNames="scenarioEntered"
-	        timeout={500}
-	        unmountOnExit={false}
-	      >
-	        <Scenario
-	          test={test}
-	          scenario={scenario}
-	          image={imageUrl}
-	        />
-	      </CSSTransition>
-	      <Survey
-	        category={category}
-	        urgency={urgency}
-	        setUrgency={setUrgency}
-	        consistancy={consistancy}
-	        setConsistancy={setConsistancy}
-	        expection={expection}
-	        setExpection={setExpection}
-	        plausibility={plausibility}
-	        setPlausibility={setPlausibility}
-	        crowdsourcingType={crowdsourcingType}
-	        setCrowdsourcingType={setCrowdsourcingType}
-	        crowdsourcingTypeWUrgency={crowdsourcingTypeWUrgency}
-	        setCrowdsourcingTypeWUrgency={setCrowdsourcingTypeWUrgency}
-	        crowdsourcingTypeWPay={crowdsourcingTypeWPay}
-	        setCrowdsourcingTypeWPay={setCrowdsourcingTypeWPay}
-	      />
-	      <button
-	        className="prev"
-	        onClick={()=>{
-						setSurveyResult(result);
-						setPages(6);
-					}}
-	      >確認交卷</button>
-	    </div>
-	  );
-	} else {
-		return (
-	    <div>
-				<div className="index">
-					請選擇頁面<br/>
-		      <select  onChange={(e)=>{
-							if(scenarioArrCount!==-1) {
-								setSurveyResult((prev)=>{
-									prev[scenarioArrCount]={
-										"tag":{
-											"Category":questions[scenarioArrCount].Category,
-											"Expected":questions[scenarioArrCount].Expected,
-											"Plausibility":questions[scenarioArrCount].Plausibility,
-											"Urgency":questions[scenarioArrCount].Urgency
-										},
-										"urgencyScore":urgency,
-										"consistancyScore":consistancy,
-										"userExpection":expection,
-										"userPlausibility":plausibility,
-										"crowdsourcingType":crowdsourcingType,
-										"crowdsourcingTypeWUrgency":crowdsourcingTypeWUrgency,
-										"crowdsourcingTypeWPay":crowdsourcingTypeWPay
-									};
-									return prev;
-								});
-							}
-							setScenarioArrCount(Number(e.target.value)-1);
-							clickButton(Number(e.target.value)-1);
-						}
-					}>
-		        <option value='0'>請選擇</option>
-		        <option value='1'>1</option>
-						<option value='2'>2</option>
-						<option value='3'>3</option>
-						<option value='4'>4</option>
-						<option value='5'>5</option>
-						<option value='6'>6</option>
-						<option value='7'>7</option>
-						<option value='8'>8</option>
-						<option value='9'>9</option>
-						<option value='10'>10</option>
-						<option value='11'>11</option>
-						<option value='12'>12</option>
-						<option value='13'>13</option>
-						<option value='14'>14</option>
-						<option value='15'>15</option>
-						<option value='16'>16</option>
-						<option value='17'>17</option>
-						<option value='18'>18</option>
-						<option value='19'>19</option>
-						<option value='20'>20</option>
-		      </select>
-				</div>
-	      <button
-	        className="finish"
-	        onClick={()=>{
-						if(window.confirm("確定要提交了嗎？這次提交之後就沒辦法再修改了唷！")){
-		          // const pilot = await createPilotCode();
-							setSurveyResult(result);
-							setPages(6);
-		        }
-					}}
-	      >檢查完畢</button>
-	    </div>
-	  );
-	}
+						setScenarioArrCount(Number(e.target.value)-1);
+						clickButton(Number(e.target.value)-1);
+					}
+				}>
+	        <option value='0'>請選擇</option>
+	        <option value='1'>1</option>
+					<option value='2'>2</option>
+					<option value='3'>3</option>
+					<option value='4'>4</option>
+					<option value='5'>5</option>
+					<option value='6'>6</option>
+					<option value='7'>7</option>
+					<option value='8'>8</option>
+					<option value='9'>9</option>
+					<option value='10'>10</option>
+					<option value='11'>11</option>
+					<option value='12'>12</option>
+					<option value='13'>13</option>
+					<option value='14'>14</option>
+					<option value='15'>15</option>
+					<option value='16'>16</option>
+					<option value='17'>17</option>
+					<option value='18'>18</option>
+					<option value='19'>19</option>
+					<option value='20'>20</option>
+	      </select>
+			</div>
+      <CSSTransition
+        in={scenarioEntered}
+        classNames="scenarioEntered"
+        timeout={500}
+        unmountOnExit={false}
+      >
+        <Scenario
+          test={test}
+          scenario={scenario}
+          image={imageUrl}
+          scenarioArrCount={scenarioArrCount}
+        />
+      </CSSTransition>
+      <Survey
+        category={category}
+        urgency={urgency}
+        setUrgency={setUrgency}
+        consistancy={consistancy}
+        setConsistancy={setConsistancy}
+        expection={expection}
+        setExpection={setExpection}
+        plausibility={plausibility}
+        setPlausibility={setPlausibility}
+        crowdsourcingType={crowdsourcingType}
+        setCrowdsourcingType={setCrowdsourcingType}
+        crowdsourcingTypeWUrgency={crowdsourcingTypeWUrgency}
+        setCrowdsourcingTypeWUrgency={setCrowdsourcingTypeWUrgency}
+        crowdsourcingTypeWPay={crowdsourcingTypeWPay}
+        setCrowdsourcingTypeWPay={setCrowdsourcingTypeWPay}
+        scenarioArrCount={scenarioArrCount}
+      />
+      <button
+        className="finish"
+        onClick={()=>{
+          if(window.confirm('確定沒問題要交卷了嗎？這次就真的送出了唷！')){
+  					setSurveyResult(result);
+  					setPages(6);
+          }
+				}}
+      >確認交卷</button>
+    </div>
+  );
 }
 
 

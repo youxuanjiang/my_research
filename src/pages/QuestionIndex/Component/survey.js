@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 
-const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, expection, setExpection, plausibility, setPlausibility, crowdsourcingType, setCrowdsourcingType, crowdsourcingTypeWUrgency, setCrowdsourcingTypeWUrgency, crowdsourcingTypeWPay, setCrowdsourcingTypeWPay}) => {
+const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, expection, setExpection, plausibility, setPlausibility, crowdsourcingType, setCrowdsourcingType, crowdsourcingTypeWUrgency, setCrowdsourcingTypeWUrgency, crowdsourcingTypeWPay, setCrowdsourcingTypeWPay, scenarioArrCount}) => {
   let question3and4;
   if (category.trim().includes('健身房')) {
     question3and4 = [
@@ -615,30 +615,33 @@ const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, exp
   ];
 
   const isMobile = window.innerWidth <= 500;
-
-  if (isMobile) {
-    return (
-      <div className="mobile_survey">
-        {
-          questionList.map((question) => {
-            return(<span key={v4()}>{question}</span>)
-          })
-        }
-      </div>
-    );
+  if (scenarioArrCount !== -1) {
+    if (isMobile) {
+      return (
+        <div className="mobile_survey">
+          {
+            questionList.map((question) => {
+              return(<span key={v4()}>{question}</span>)
+            })
+          }
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="survey">
+          {
+            questionList.map((question) => {
+              return(<span key={v4()}>{question}</span>)
+            })
+          }
+        </div>
+      );
+    }
+  } else {
+    return;
   }
-  else {
-    return (
-      <div className="survey">
-        {
-          questionList.map((question) => {
-            return(<span key={v4()}>{question}</span>)
-          })
-        }
-      </div>
-    );
-  }
-};
+}
 
 export default Survey;
 

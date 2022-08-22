@@ -50,8 +50,7 @@ const ThankPage = ( {surveyResult, userCode} ) => {
   addResult(surveyResult, userCode);
   return(
     <div>
-      <h1>謝謝您的填寫</h1>
-      <div>{ JSON.stringify(surveyResult) }</div>
+      <h1>非常感謝您的參與本實驗</h1>
     </div>
   );
 }

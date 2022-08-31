@@ -41,22 +41,22 @@ const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, exp
             type="radio"
             checked={plausibility.trim() === 'BOTH'}
             onChange={() => setPlausibility('BOTH')}
-          />現場情況與兩種即時資訊都差不多<br/>
+          />我相信現場情況與兩種即時資訊都差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'CROWD'}
             onChange={() => setPlausibility('CROWD')}
-          />現場情況只與<span className="highLine">即時人潮資訊</span>差不多<br/>
+          />我相信現場情況只與<span className="highLine">即時人潮資訊</span>差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'OCCUPANCY'}
             onChange={() => setPlausibility('OCCUPANCY')}
-          />現場情況只與<span className="highLine">即時器材使用狀況</span>差不多<br/>
+          />我相信現場情況只與<span className="highLine">即時器材使用狀況</span>差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'NONE'}
             onChange={() => setPlausibility('NONE')}
-          />現場情況與兩種即時資訊都有差距<br/>
+          />我相信現場情況與兩種即時資訊都有差距<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'NOT_SURE'}
@@ -105,22 +105,22 @@ const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, exp
             type="radio"
             checked={plausibility.trim() === 'BOTH'}
             onChange={() => setPlausibility('BOTH')}
-          />現場情況與兩種即時資訊都差不多<br/>
+          />我相信現場情況與兩種即時資訊都差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'CROWD'}
             onChange={() => setPlausibility('CROWD')}
-          />現場情況只與<span className="highLine">即時人潮資訊</span>差不多<br/>
+          />我相信現場情況只與<span className="highLine">即時人潮資訊</span>差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'OCCUPANCY'}
             onChange={() => setPlausibility('OCCUPANCY')}
-          />現場情況只與<span className="highLine">即時座位使用狀況</span>差不多<br/>
+          />我相信現場情況只與<span className="highLine">即時座位使用狀況</span>差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'NONE'}
             onChange={() => setPlausibility('NONE')}
-          />現場情況與兩種即時資訊都有差距<br/>
+          />我相信現場情況與兩種即時資訊都有差距<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'NOT_SURE'}
@@ -169,22 +169,22 @@ const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, exp
             type="radio"
             checked={plausibility.trim() === 'BOTH'}
             onChange={() => setPlausibility('BOTH')}
-          />現場情況與兩種即時資訊都差不多<br/>
+          />我相信現場情況與兩種即時資訊都差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'CROWD'}
             onChange={() => setPlausibility('CROWD')}
-          />現場情況只與<span className="highLine">即時人潮資訊</span>差不多<br/>
+          />我相信現場情況只與<span className="highLine">即時人潮資訊</span>差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'OCCUPANCY'}
             onChange={() => setPlausibility('OCCUPANCY')}
-          />現場情況只與<span className="highLine">即時球桌使用狀況</span>差不多<br/>
+          />我相信現場情況只與<span className="highLine">即時球桌使用狀況</span>差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'NONE'}
             onChange={() => setPlausibility('NONE')}
-          />現場情況與兩種即時資訊都有差距<br/>
+          />我相信現場情況與兩種即時資訊都有差距<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'NOT_SURE'}
@@ -233,22 +233,22 @@ const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, exp
             type="radio"
             checked={plausibility.trim() === 'BOTH'}
             onChange={() => setPlausibility('BOTH')}
-          />現場情況與兩種即時資訊都差不多<br/>
+          />我相信現場情況與兩種即時資訊都差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'CROWD'}
             onChange={() => setPlausibility('CROWD')}
-          />現場情況只與<span className="highLine">即時車輛數資訊</span>差不多<br/>
+          />我相信現場情況只與<span className="highLine">即時車輛數資訊</span>差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'OCCUPANCY'}
             onChange={() => setPlausibility('OCCUPANCY')}
-          />現場情況只與<span className="highLine">即時車位使用狀況</span>差不多<br/>
+          />我相信現場情況只與<span className="highLine">即時車位使用狀況</span>差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'NONE'}
             onChange={() => setPlausibility('NONE')}
-          />現場情況與兩種即時資訊都有差距<br/>
+          />我相信現場情況與兩種即時資訊都有差距<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'NOT_SURE'}
@@ -297,22 +297,22 @@ const Survey = ({category, urgency, setUrgency, consistancy, setConsistancy, exp
             type="radio"
             checked={plausibility.trim() === 'BOTH'}
             onChange={() => setPlausibility('BOTH')}
-          />現場情況與兩種即時資訊都差不多<br/>
+          />我相信現場情況與兩種即時資訊都差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'TIME'}
             onChange={() => setPlausibility('TIME')}
-          />現場情況只與<span className="highLine">剩餘時間資訊</span>差不多<br/>
+          />我相信現場情況只與<span className="highLine">剩餘時間資訊</span>差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'LOCATION'}
             onChange={() => setPlausibility('LOCATION')}
-          />現場情況只與<span className="highLine">即時位置狀況</span>差不多<br/>
+          />我相信現場情況只與<span className="highLine">即時位置狀況</span>差不多<br/>
           <input
             type="radio"
             checked={plausibility.trim() === 'NONE'}
             onChange={() => setPlausibility('NONE')}
-          />現場情況與兩種即時資訊都有差距<br/>
+          />我相信現場情況與兩種即時資訊都有差距<br/>
         </div>
         <input
           type="radio"

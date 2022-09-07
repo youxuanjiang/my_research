@@ -509,8 +509,8 @@ async function fetchData(setCategory, setScenario, setTest, setImageUrl, fecthSt
         questions.push(question_crowd_occupancy[9-i]);
       }
     }
-    const square_order = [4,9,18,19];
-    questions = balancedLatinSquare(questions, square_order[Math.floor( Math.random() * 4 )]);
+    // const square_order = [4,9,18,19];
+    questions = balancedLatinSquare(questions, Math.floor( Math.random() * 20 ));
   } catch (e) {
     console.log('error while get API: ' + e);
   }

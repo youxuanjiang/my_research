@@ -727,7 +727,7 @@ const Questionaire = ({setPages, setSurveyResult, setQuestions}) => {
         });
 
         if (questions.length === scenarioArrCount+1){
-          setButtonValue('填寫完畢')
+          setButtonValue('填寫完畢進行訪談')
         }
         // console.log(scenarioArrCount);
         // console.log(questions[scenarioArrCount].Question.split('\n'));

@@ -160,6 +160,7 @@ const QuestionIndex = ({setPages, surveyResult, setSurveyResult, questions}) => 
         setCrowdsourcingTypeWPay={setCrowdsourcingTypeWPay}
         scenarioArrCount={scenarioArrCount}
       />
+    <h1 className="title">現在是訪談時間，先不要交卷！</h1>
       <button
         className="finish"
         onClick={()=>{

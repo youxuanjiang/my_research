@@ -13,7 +13,7 @@ db.connect(function(err) {
   }
 });
 
-db.query('select * from result', async function(err, rows) {
+db.query(`select * from result where UserCode LIKE 'U%'`, async function(err, rows) {
   if (err) throw err;
   const doc = new GoogleSpreadsheet(docID);
   const creds = require('./config/cred');
